@@ -11,18 +11,38 @@
             <div class="form-group">
                 <label>First Name</label>
                 {{ form.first_name }}
+                {% if form.first_name.errors %}
+                  <span class="help-block" style="color: red">
+                    {% for error in form.first_name.errors %}{{ error }}{% endfor %}
+                  </span>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label>Last Name</label>
                 {{ form.last_name }}
+                {% if form.last_name.errors %}
+                  <span class="help-block" style="color: red">
+                    {% for error in form.last_name.errors %}{{ error }}{% endfor %}
+                  </span>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label>Mobile Number</label>
                 {{ form.mobile }}
+                {% if form.mobile.errors %}
+                  <span class="help-block" style="color: red">
+                    {% for error in form.mobile.errors %}{{ error }}{% endfor %}
+                  </span>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label>ID Number</label>
                 {{ form.id_number }}
+                {% if form.id_number.errors %}
+                  <span class="help-block" style="color: red">
+                    {% for error in form.id_number.errors %}{{ error }}{% endfor %}
+                  </span>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label>Select Category</label><br>
