@@ -4,21 +4,18 @@ from .models import Contact, Contact_Group, Sms
 
 
 class ContactForm(forms.ModelForm):
-
     class Meta:
-        model  = Contact
+        model = Contact
         fields = ('first_name', 'last_name', 'id_number', 'mobile')
 
 
 class Contact_GroupForm(forms.ModelForm):
-
-	class Meta:
-		model = Contact_Group
-		fields = ('name', 'contacts')
+    class Meta:
+        model = Contact_Group
+        fields = ('name', 'contacts')
 
 
 class SmsForm(forms.ModelForm):
-
-	class Meta:
-		model = Sms
-		fields = ('group', 'sms')
+    class Meta:
+        model = Sms
+        fields = ('group', 'sms')

@@ -6,11 +6,8 @@ from contacts import views
 
 from django.contrib import admin
 
-
 urlpatterns = [
-
-	url(r'^admin/', admin.site.urls),
-
+    url(r'^admin/', admin.site.urls),
     url(r'^$', views.contact_list, name='contact_list'),
     url(r'^create/$', views.contact_create, name='contact_create'),
     # url(r'^books/(?P<pk>\d+)/update/$', views.book_update, name='book_update'),
@@ -20,5 +17,8 @@ urlpatterns = [
 urlpatterns += [
     url(r'^groups/$', views.group_list, name='group_list'),
     url(r'^groups/create/$', views.group_create, name='group_create'),
-    url(r'^groups/(?P<pk>\d+)/update/$', views.group_update, name='group_update'),
+    url(
+        r'^groups/(?P<pk>\d+)/update/$',
+        views.group_update,
+        name='group_update'),
 ]
