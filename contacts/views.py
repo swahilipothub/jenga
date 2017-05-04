@@ -9,10 +9,14 @@ from .forms import ContactForm, SmsForm, Contact_GroupForm
 
 from django.contrib import messages
 
+def index(request):
+	index = "index"
+	return render(request, 'index.html', {'index': index})
+
 # @login_required(login_url='/login/')
 def contact_list(request):
     contacts = Contact.objects.all()
-    return render(request, 'contact_list.html', {'contacts': contacts})
+    return render(request, 'contacts.html', {'contacts': contacts})
 
 
 # @login_required(login_url='/login/')

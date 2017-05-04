@@ -18,7 +18,8 @@ class Contact(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return self.mobile
+		# return self.mobile
+		return ' '.join([self.first_name, self.last_name,])
 
 
 class Contact_Group(models.Model):
