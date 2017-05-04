@@ -6,12 +6,11 @@ from contacts import views
 
 from django.contrib import admin
 
-
 urlpatterns = [
 
 	url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name='index'),\
 ]
 
 urlpatterns += [
@@ -27,3 +26,4 @@ urlpatterns += [
     # url(r'^books/(?P<pk>\d+)/delete/$', views.book_delete, name='book_delete'),
     
 ]
+

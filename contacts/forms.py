@@ -24,7 +24,6 @@ class Contact_GroupForm(forms.ModelForm):
 
 
 class SmsForm(forms.ModelForm):
-
-	class Meta:
-		model = Sms
-		fields = ('group', 'sms')
+    class Meta:
+        model = Sms
+        fields = ('group', 'sms')
