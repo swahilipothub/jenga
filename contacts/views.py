@@ -10,18 +10,25 @@ from .forms import ContactForm, SmsForm, Contact_GroupForm
 from django.contrib import messages
 
 
+@login_required(login_url='/login/')
 def index(request):
 	index = "index"
 	return render(request, 'index.html', {'index': index})
 
-	
-# @login_required(login_url='/login/')
+
+@login_required(login_url='/login/')
+def history(request):
+	history = "history"
+	return render(request, 'history.html', {'history': history})
+
+
+@login_required(login_url='/login/')
 def contact_list(request):
     contacts = Contact.objects.all()
     return render(request, 'contacts.html', {'contacts': contacts})
 
 
-# @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def contact_create(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -39,11 +46,13 @@ def contact_create(request):
     return render(request, 'contact_create.html', {'form': form})
 
 
+@login_required(login_url='/login/')
 def group_list(request):
     groups = Contact_Group.objects.all()
     return render(request, 'group_list.html', {'groups': groups})
 
 
+@login_required(login_url='/login/')
 def group_create(request):
     if request.method == 'POST':
         form = Contact_GroupForm(request.POST)
@@ -57,6 +66,7 @@ def group_create(request):
     return render(request, 'group_create.html', {'form': form})
 
 
+@login_required(login_url='/login/')
 def group_update(request):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':

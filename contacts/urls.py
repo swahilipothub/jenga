@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
-from django.contrib.auth import views as auth_views
+# from django.contrib.auth import views as auth_views
 
 from contacts import views
 
@@ -10,7 +10,9 @@ urlpatterns = [
 
 	url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.index, name='index'),\
+    url(r'^$', views.index, name='index'),
+
+    url(r'^history$', views.history, name='history'),
 ]
 
 urlpatterns += [
