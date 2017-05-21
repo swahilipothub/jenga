@@ -9,10 +9,6 @@ from django.contrib import admin
 urlpatterns = [
 
 	url(r'^admin/', admin.site.urls),
-
-    url(r'^$', views.index, name='index'),
-
-    url(r'^history$', views.history, name='history'),
 ]
 
 urlpatterns += [
@@ -22,10 +18,13 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^contacts/$', views.contact_list, name='contact_list'),
-    url(r'^contacts/create/$', views.contact_create, name='contact_create'),
-    # url(r'^books/(?P<pk>\d+)/update/$', views.book_update, name='book_update'),
-    # url(r'^books/(?P<pk>\d+)/delete/$', views.book_delete, name='book_delete'),
+    
+    url(r'^create/$', views.contact_create, name='contact_create'),
+
+    url(r'^(?P<pk>\d+)/update/$', views.contact_update, name='contact_update'),
+    # url(r'^contacts/(?P<pk>\d+)/delete/$', views.contacts_delete, name='contact_delete'),
+
+    url(r'^$', views.contact_list, name='contact_list'),
     
 ]
 

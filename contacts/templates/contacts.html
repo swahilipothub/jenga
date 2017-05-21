@@ -1,38 +1,51 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+    {% extends "base.html" %}
+    {% load staticfiles %}
 
-{% block page-header %} Contacts {% endblock %}
+    {% block page-header %} Contacts {% endblock %}
 
-    {% block body %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Mobile Number</th>
-                            <th>ID Number</th>
-                            <th>Category</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contact in contacts %}
-                        <tr>
-                            <td> {{ contact.first_name }} </td>
-                            <td> {{ contact.last_name}} </td>
-                            <td> {{ contact.mobile }} </td>
-                            <td> {{ contact.id_number }} </td>
-                            <td>Tech</td>
-                        </tr>
-                        {% endfor %}
-                        
-                    </tbody>
-                </table>
-            </div>
+        {% block body %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Mobile Number</th>
+                                <th>ID Number</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for contact in contacts %}
+                            <tr>
+                                <td> {{ contact.first_name }} </td>
+                                <td> {{ contact.last_name}} </td>
+                                <td> {{ contact.mobile }} </td>
+                                <td> {{ contact.id_number }} </td>
+                                <td> {{ contact.category }}</td>
+                                
+                                <td style="">
+                                  <button type="button"
+                                          class="btn btn-warning btn-sm"
+                                          data-url="{% url 'contact_update' contact.id %}">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                                  </button>
+                                  <button type="button"
+                                          class="btn btn-danger btn-sm js-delete-book"
+                                          data-url="">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete
+                                  </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
 

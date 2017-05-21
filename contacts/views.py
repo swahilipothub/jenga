@@ -4,27 +4,17 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from .models import Contact, Sms, Contact_Group
-from .forms import ContactForm, SmsForm, Contact_GroupForm
+from .models import Contact, Contact_Group
+from .forms import ContactForm, Contact_GroupForm
 
 from django.contrib import messages
 
 
-@login_required(login_url='/login/')
-def index(request):
-	index = "index"
-	return render(request, 'index.html', {'index': index})
-
-
-@login_required(login_url='/login/')
-def history(request):
-	history = "history"
-	return render(request, 'history.html', {'history': history})
-
+contact_object = Contact.objects.all()
 
 @login_required(login_url='/login/')
 def contact_list(request):
-    contacts = Contact.objects.all()
+    contacts = contact_object
     return render(request, 'contacts.html', {'contacts': contacts})
 
 
@@ -37,8 +27,11 @@ def contact_create(request):
             last_name = form.cleaned_data['last_name']
             id_number = form.cleaned_data['id_number']
             mobile = form.cleaned_data['mobile']
+            category = form.cleaned_data['category']
 
             form.save()
+
+            form = ContactForm()
 
             messages.success(request, "Successfully Created")
     else:
@@ -47,8 +40,30 @@ def contact_create(request):
 
 
 @login_required(login_url='/login/')
+def contact_update(request):
+    contact = get_object_or_404(Contact, pk=pk)
+    if request.method == 'POST':
+        form = ContactForm(request.POST, instance=contact)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            id_number = form.cleaned_data['id_number']
+            mobile = form.cleaned_data['mobile']
+            category = form.cleaned_data['category']
+
+            form.save()
+
+            form = ContactForm()
+
+            messages.success(request, "Successfully Created")
+    else:
+        form = ContactForm(instance=contact)
+    return render(request, 'contact_update.html', {'form': form})
+
+
+@login_required(login_url='/login/')
 def group_list(request):
-    groups = Contact_Group.objects.all()
+    groups = contact_object
     return render(request, 'group_list.html', {'groups': groups})
 
 
@@ -58,9 +73,11 @@ def group_create(request):
         form = Contact_GroupForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            contacts = form.cleaned_data['contacts']
+            # contact = form.cleaned_data['contact']
 
             form.save()
+
+            form = Contact_GroupForm()
     else:
         form = Contact_GroupForm()
     return render(request, 'group_create.html', {'form': form})
@@ -71,6 +88,13 @@ def group_update(request):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
         form = Group_ContactForm(request.POST, instance=group)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            # contact = form.cleaned_data['contact']
+
+            form.save()
+
+            form = Contact_GroupForm()
     else:
         form = Group_ContactForm(instance=group)
     return render(request, 'group_update.html', {'form': form})
