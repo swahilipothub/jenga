@@ -12,6 +12,7 @@ from django.contrib import messages
 
 contact_object = Contact.objects.all()
 
+
 @login_required(login_url='/login/')
 def contact_list(request):
     contacts = contact_object
@@ -28,11 +29,8 @@ def contact_create(request):
             id_number = form.cleaned_data['id_number']
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
-
             form.save()
-
             form = ContactForm()
-
             messages.success(request, "Successfully Created")
     else:
         form = ContactForm()
@@ -40,7 +38,25 @@ def contact_create(request):
 
 
 @login_required(login_url='/login/')
-def contact_update(request):
+def contact_detail(request, pk, template='contact_detail.html'):
+    """Detail of a person.
+
+    :param template: Add a custom template.
+    """
+    try:
+        contact_detail = Contact.objects.get(pk__iexact=pk)
+    except Contact.DoesNotExist:
+        raise Http404
+
+    kwvars = {
+        'object': contact_detail,
+    }
+
+    return render_to_response(template, kwvars, RequestContext(request))
+
+
+@login_required(login_url='/login/')
+def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         form = ContactForm(request.POST, instance=contact)
@@ -50,11 +66,7 @@ def contact_update(request):
             id_number = form.cleaned_data['id_number']
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
-
             form.save()
-
-            form = ContactForm()
-
             messages.success(request, "Successfully Created")
     else:
         form = ContactForm(instance=contact)
@@ -73,10 +85,7 @@ def group_create(request):
         form = Contact_GroupForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            # contact = form.cleaned_data['contact']
-
             form.save()
-
             form = Contact_GroupForm()
     else:
         form = Contact_GroupForm()
@@ -84,17 +93,13 @@ def group_create(request):
 
 
 @login_required(login_url='/login/')
-def group_update(request):
+def group_update(request, pk):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
-        form = Group_ContactForm(request.POST, instance=group)
+        form = Contact_GroupForm(request.POST, instance=group)
         if form.is_valid():
             name = form.cleaned_data['name']
-            # contact = form.cleaned_data['contact']
-
             form.save()
-
-            form = Contact_GroupForm()
     else:
-        form = Group_ContactForm(instance=group)
+        form = Contact_GroupForm(instance=group)
     return render(request, 'group_update.html', {'form': form})

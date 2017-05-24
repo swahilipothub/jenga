@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block page-header %} Please login first {% endblock %}
+{% block page_title%} Please login first {% endblock %}
 
 {% block body %}
 
-
-<div class="row">
-    <div class="col-lg-8" >
+<div class="content">
     {% if form.non_field_errors %}
           {% for error in form.non_field_errors %}
             <div class="alert alert-danger alert-dismissable">
@@ -20,12 +18,11 @@
         {% csrf_token %}
         <!-- <h2 class="form-signin-heading">Please sign in</h2> -->
         <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required autofocus><br>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus><br>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="password" id="password" class="form-control" placeholder="Password" required><br>  
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-primary " type="submit">Sign in</button>
       </form>
-      </div>
 </div>
 
 {% endblock %}

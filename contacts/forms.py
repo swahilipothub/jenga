@@ -20,7 +20,8 @@ class ContactForm(forms.ModelForm):
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	id_number = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-	category = forms.ModelChoiceField(queryset=Contact_Group.objects.all())
+	category = forms.ModelChoiceField(queryset=Contact_Group.objects.all(), 
+										widget=forms.Select(attrs={'class':'form-control'}))
 
 	class Meta:
 		model  = Contact

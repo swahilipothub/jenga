@@ -11,9 +11,11 @@ from AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayEx
 from .models import Sms
 from contacts.models import Contact
 
-username = "athmanziri"
-apikey   = "6083c1f67ac28d2fb5525ed9be1ffac58a1fcda9998fc9d64ba672ef1baf9414"
+from sms import secrets
 
+username = secrets.USERNAME
+apikey   = secrets.APIKEY
+gateway  = AfricasTalkingGateway(username, apikey)
 
 class SmsForm(forms.ModelForm):
     to = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -40,8 +42,6 @@ def sms_create(request):
             # cat = Contact.objects.all().filter(category=category)
             message = form.cleaned_data['message']
 
-            gateway = AfricasTalkingGateway(username, apikey)
-
             results = gateway.sendMessage(to, message)
 
             form.save()
@@ -50,3 +50,17 @@ def sms_create(request):
     else:
         form = SmsForm()
     return render(request, 'sms_create.html', {'form': form})
+
+
+# @login_required(login_url='/login/')
+# def sms_fetch_list(request):
+#     lastReceivedId = 0
+#     while True:
+#         messages = gateway.fetchMessages(lastReceivedId)
+#         for sms_message in messages:
+#             sms_from = message['from']
+#             sms_to = message['to']
+#             sms_date = message['date']
+#             sms_text = message['text']
+#             sms_linkID = message['linkID']  
+#     return render(request, 'sms_list.html', {'sms_message': sms_message})

@@ -19,10 +19,11 @@ urlpatterns += [
 
 urlpatterns += [
     
-    url(r'^create/$', views.contact_create, name='contact_create'),
+    url(r'^add/$', views.contact_create, name='contact_create'),
 
-    url(r'^(?P<pk>\d+)/update/$', views.contact_update, name='contact_update'),
-    # url(r'^contacts/(?P<pk>\d+)/delete/$', views.contacts_delete, name='contact_delete'),
+    url(r'^(?P<pk>\d+)/edit/$', views.contact_update, name='contact_update'),
+    
+    # url(r'^(?P<pk>\d+)/delete/$', views.contacts_delete, name='contact_delete'),
 
     url(r'^$', views.contact_list, name='contact_list'),
     

@@ -4,8 +4,7 @@
 {% block page_title %} Add Contact {% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-lg-12">
+<div class="content">
 
         <form role="form" action="" method="post">
         	{% csrf_token %}
@@ -29,22 +28,10 @@
                 <label>Select Category</label><br>
                 {{ form.category }}
             </div>
-
+            
             <input class="btn btn-default" type="submit" value="Add Contact" />
 
         </form>
-
-    </div>
     
 </div>               
 {% endblock %}
-
-
-
-<!-- <form action="" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
-</form> -->

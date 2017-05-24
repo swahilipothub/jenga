@@ -12,7 +12,6 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
     <link href=" {% static 'css/bootstrap.min.css' %} " rel="stylesheet" />
 
@@ -40,7 +39,7 @@
 
         <div class="sidebar-wrapper">
             <div class="logo">
-                <a href="" class="simple-text">
+                <a href="{% url 'sms_create' %}" class="simple-text">
                     Swahilipot Messages
                 </a>
             </div>
@@ -48,13 +47,13 @@
             <ul class="nav">
                 <li class="">
                     <a href="{% url 'sms_create' %}">
-                        <i class="pe-7s-graph"></i>
+                        <i class="pe-7s-mail-open-file"></i>
                         <p>Send Message</p>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'sms_list' %}">
-                        <i class="pe-7s-note2"></i>
+                        <i class="pe-7s-mail-open"></i>
                         <p>Messages</p>
                     </a>
                 </li>
@@ -62,13 +61,13 @@
 
                 <li>
                     <a href="{% url 'contact_create' %}">
-                        <i class="pe-7s-news-paper"></i>
+                        <i class="pe-7s-add-user"></i>
                         <p>Add Contact</p>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'contact_list' %}">
-                        <i class="pe-7s-note2"></i>
+                        <i class="pe-7s-users"></i>
                         <p>Contacts</p>
                     </a>
                 </li>
@@ -107,14 +106,15 @@
                 <div class="collapse navbar-collapse">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <!-- <li>
                            <a href="">
                                Account
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{% url 'logout' %}">
-                                Log out
+                                <i class="pe-7s-power"></i>
+                                <b>Log out</b>
                             </a>
                         </li>
                     </ul>
@@ -145,32 +145,8 @@
 
         <footer class="footer">
             <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy; 2016 <a href="">Swahilipot hub</a>, made with love for a better web
+                <p class="copyright pull-left">
+                    &copy; 2017 <a href="">Swahilipot hub</a>, made with love for a better web
                 </p>
             </div>
         </footer>
