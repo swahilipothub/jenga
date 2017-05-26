@@ -36,3 +36,18 @@ try:
             
 except AfricasTalkingGatewayException, e:
     print 'Encountered an error while fetching messages: %s' % str(e)
+
+
+
+# @login_required(login_url='/login/')
+# def sms_fetch_list(request):
+#     lastReceivedId = 0
+#     while True:
+#         messages = gateway.fetchMessages(lastReceivedId)
+#         for sms_message in messages:
+#             sms_from = message['from']
+#             sms_to = message['to']
+#             sms_date = message['date']
+#             sms_text = message['text']
+#             sms_linkID = message['linkID']  
+#     return render(request, 'sms_list.html', {'sms_message': sms_message})

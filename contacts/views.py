@@ -1,18 +1,15 @@
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.template.loader import render_to_string
 
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm
-
-from django.contrib import messages
 
 
 contact_object = Contact.objects.all()
 
 
+# Contact list.
 @login_required(login_url='/login/')
 def contact_list(request):
     contacts = contact_object
@@ -37,12 +34,11 @@ def contact_create(request):
     return render(request, 'contact_create.html', {'form': form})
 
 
+"""Detail of a person.
+   :param template: Add a custom template.
+"""
 @login_required(login_url='/login/')
 def contact_detail(request, pk, template='contact_detail.html'):
-    """Detail of a person.
-
-    :param template: Add a custom template.
-    """
     try:
         contact_detail = Contact.objects.get(pk__iexact=pk)
     except Contact.DoesNotExist:

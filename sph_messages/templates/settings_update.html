@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block page_title %} Update Settings {% endblock %}
+
+{% block body %}
+<div class="content">
+
+        <form role="form" action="" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Edit Your Africa'stalking Username</label>
+                {{ form.user_name }}                    
+            </div>
+            <div class="form-group">
+                <label>Edit Your Africa'stalking API Key</label>
+                {{ form.api_key }}
+            </div>
+            
+            <input class="btn btn-default" type="submit" value="Save Settings" />
+
+        </form>
+    
+</div>                    
+{% endblock %}
