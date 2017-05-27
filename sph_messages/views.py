@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from sms import secrets
 from contacts.models import Contact, Contact_Group
@@ -29,6 +30,7 @@ def sms_settings_add(request):
             api_key   = form.cleaned_data['api_key']
             form.save()
             form      = SmsSettingsForm()
+            messages.success(request, "Settings Successfully Added")
     else:
         form = SmsSettingsForm()
     return render(request, 'settings_add.html', {'form': form})
@@ -43,6 +45,7 @@ def sms_settings_update(request, pk):
             user_name = form.cleaned_data['user_name']
             api_key   = form.cleaned_data['api_key']
             form.save()
+            messages.success(request, "Settings Successfully Updated")
     else:
         form = SmsSettingsForm(instance=sms_settings_update)
     return render(request, 'settings_update.html', {'form': form})
@@ -58,7 +61,6 @@ def sms_list(request):
 def sms_create(request):
     if request.method == 'POST':
         form = SmsForm(request.POST)
-
         if form.is_valid():
             category = form.cleaned_data['category']
             message  = form.cleaned_data['message']
@@ -71,6 +73,7 @@ def sms_create(request):
 
             form.save()
             form = SmsForm()
+            messages.success(request, "Message Successfully Sent")
     else:
         form = SmsForm()
     return render(request, 'sms_create.html', {'form': form})

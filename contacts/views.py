@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm
 
-
 contact_object = Contact.objects.all()
 
 
@@ -27,8 +26,9 @@ def contact_create(request):
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
             form.save()
+            messages.success(request, "Contact Successfully Created")
             form = ContactForm()
-            messages.success(request, "Successfully Created")
+            
     else:
         form = ContactForm()
     return render(request, 'contact_create.html', {'form': form})
@@ -63,7 +63,7 @@ def contact_update(request, pk):
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
             form.save()
-            messages.success(request, "Successfully Created")
+            messages.success(request, "Contact Successfully Updated")
     else:
         form = ContactForm(instance=contact)
     return render(request, 'contact_update.html', {'form': form})
@@ -71,7 +71,7 @@ def contact_update(request, pk):
 
 @login_required(login_url='/login/')
 def group_list(request):
-    groups = contact_object
+    groups = Contact_Group.objects.all()
     return render(request, 'group_list.html', {'groups': groups})
 
 
@@ -83,6 +83,7 @@ def group_create(request):
             name = form.cleaned_data['name']
             form.save()
             form = Contact_GroupForm()
+            messages.success(request, "Group Successfully Created")
     else:
         form = Contact_GroupForm()
     return render(request, 'group_create.html', {'form': form})
@@ -96,6 +97,7 @@ def group_update(request, pk):
         if form.is_valid():
             name = form.cleaned_data['name']
             form.save()
+            messages.success(request, "Group Successfully Updated")
     else:
         form = Contact_GroupForm(instance=group)
     return render(request, 'group_update.html', {'form': form})

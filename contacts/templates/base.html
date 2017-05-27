@@ -82,8 +82,11 @@
 
         <div class="sidebar-wrapper">
             <div class="logo">
+                <a class="navbar-brand" href="{% url 'sms_create' %}">
+                    <img style="max-width:200px; " src="{% static 'img/logo.png' %}">
+                </a>
                 <a href="{% url 'sms_create' %}" class="simple-text">
-                    Swahilipot Messages
+                    Messages
                 </a>
             </div>
 
@@ -184,6 +187,7 @@
                         <div class="card">
                             
                             <div class="content">
+                                {% include 'messages.html' %}
                                 {% block body %}
 
                                 {% endblock %}
