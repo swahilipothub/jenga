@@ -11,7 +11,7 @@ class Contact_Group(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'sph_contact_groups'
+        db_table = 'sph_groups'
         ordering = ('name',)
         verbose_name = _('group')
         verbose_name_plural = _('groups')

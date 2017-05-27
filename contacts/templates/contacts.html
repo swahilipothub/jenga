@@ -9,8 +9,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Name</th>
                                 <th>Mobile Number</th>
                                 <th>ID Number</th>
                                 <th>Category</th>
@@ -19,8 +18,7 @@
                         <tbody>
                         {% for contact in contacts %}
                             <tr>
-                                <td> {{ contact.first_name }} </td>
-                                <td> {{ contact.last_name}} </td>
+                                <td> {{ contact.first_name }} {{ contact.last_name}}</td>
                                 <td> {{ contact.mobile }} </td>
                                 <td> {{ contact.id_number }} </td>
                                 <td> {{ contact.category }}</td>

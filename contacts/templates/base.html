@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <link rel="icon" type="image/png" href="{% static 'img/favico.png' %} ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title>{% block title %} Swahilipot Messages {% endblock %}</title>
@@ -31,11 +31,54 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href=" {% static 'css/pe-icon-7-stroke.css' %} " rel="stylesheet" />
 
+    <style>
+        .dropbtn {
+            background-color: #000;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #f1f1f1;
+            color: black;
+        }
+    </style>
+
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="{% static 'img/sidebar-5.jpg' %}">
+    <div class="sidebar" data-color="black" data-image="{% static 'img/swahilipot.jpg' %}">
 
         <div class="sidebar-wrapper">
             <div class="logo">
@@ -85,20 +128,6 @@
                         <p>Groups</p>
                     </a>
                 </li>
-                <hr>
-
-                <li>
-                    <a href="{% url 'sms_settings_add' %}">
-                        <i class="pe-7s-note2"></i>
-                        <p>Add Settings</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'sms_settings_list' %}">
-                        <i class="pe-7s-note2"></i>
-                        <p>Settings</p>
-                    </a>
-                </li>
 
             </ul>
         </div>
@@ -119,18 +148,29 @@
                 <div class="collapse navbar-collapse">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- <li>
-                           <a href="">
-                               Account
-                            </a>
-                        </li> -->
                         <li>
-                            <a href="{% url 'logout' %}">
-                                <i class="pe-7s-power"></i>
-                                <b>Log out</b>
-                            </a>
+                            <div class="dropdown">
+                                  <button class="dropbtn btn">Account Settings</button>
+                                  <div class="dropdown-content">
+                                        <a href="{% url 'sms_settings_add' %}">
+                                            <i class="pe-7s-settings"></i>
+                                            Add Settings
+                                        </a>
+
+                                        <a href="{% url 'sms_settings_list' %}">
+                                            <i class="pe-7s-switch"></i>
+                                            Settings
+                                        </a>
+                                        
+                                        <a href="{% url 'logout' %}">
+                                            <i class="pe-7s-power"></i>
+                                            <b>Logout</b>
+                                        </a>
+                                  </div>
+                              </div>  
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
