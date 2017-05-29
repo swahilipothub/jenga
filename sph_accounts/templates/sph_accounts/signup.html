@@ -1,0 +1,50 @@
+{% extends "no_auth_base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+    <div class="content">
+        <form role="form" method="post" action="">
+         {% csrf_token %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Username</label>
+                        {{ form.username }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Email</label>
+                        {{ form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Password</label>
+                        {{ form.password1 }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        {{ form.password2 }}
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-default" value="Create Account" />
+
+            <div class="clearfix"></div>
+        </form>
+    </div>
+{% endblock %}

@@ -10,6 +10,6 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-	url(r'^message/history/', views.sms_list, name='sms_list'),
+	url(r'^history/', views.sms_list, name='sms_list'),
     url(r'^', views.sms_create, name='sms_create'),
 ]

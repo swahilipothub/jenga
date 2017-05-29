@@ -15,10 +15,10 @@ apikey   = secrets.APIKEY
 gateway  = AfricasTalkingGateway(username, apikey)
 
 
-@login_required(login_url='/login/')
+@login_required
 def sms_settings_list(request):
-    sms_settings_list = SmsSettings.objects.all()
-    return render(request, 'settings_list.html', {'sms_settings_list': sms_settings_list})
+    sms_settings_list = SmsSettings.objects.filter(user=request.user)
+    return render(request, 'sph_messages/settings_list.html', {'sms_settings_list': sms_settings_list})
 
 
 @login_required(login_url='/login/')
@@ -27,37 +27,45 @@ def sms_settings_add(request):
         form = SmsSettingsForm(request.POST)
         if form.is_valid():
             user_name = form.cleaned_data['user_name']
-            api_key   = form.cleaned_data['api_key']
-            form.save()
-            form      = SmsSettingsForm()
+            api_key = form.cleaned_data['api_key']
+
+            settings_add = form.save(commit=False)
+            settings_add.user = request.user
+            settings_add.save()
+
+            form = SmsSettingsForm()
             messages.success(request, "Settings Successfully Added")
     else:
         form = SmsSettingsForm()
-    return render(request, 'settings_add.html', {'form': form})
+    return render(request, 'sph_messages/settings_add.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def sms_settings_update(request, pk):
     sms_settings_update = get_object_or_404(SmsSettings, pk=pk)
     if request.method == 'POST':
         form = SmsSettingsForm(request.POST, instance=sms_settings_update)
         if form.is_valid():
             user_name = form.cleaned_data['user_name']
-            api_key   = form.cleaned_data['api_key']
-            form.save()
+            api_key = form.cleaned_data['api_key']
+
+            settings_update = form.save(commit=False)
+            settings_update.user = request.user
+            settings_update = form.save()
+
             messages.success(request, "Settings Successfully Updated")
     else:
         form = SmsSettingsForm(instance=sms_settings_update)
-    return render(request, 'settings_update.html', {'form': form})
+    return render(request, 'sph_messages/settings_update.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def sms_list(request):
-    sms_list = Sms.objects.all()
-    return render(request, 'sms_list.html', {'sms_list': sms_list})
+    sms_list = Sms.objects.filter(user=request.user)
+    return render(request, 'sph_messages/sms_list.html', {'sms_list': sms_list})
 
 
-@login_required(login_url='/login/')
+@login_required
 def sms_create(request):
     if request.method == 'POST':
         form = SmsForm(request.POST)
@@ -71,9 +79,11 @@ def sms_create(request):
             to            = ",".join(recipients)
             results       = gateway.sendMessage(to, message)
 
-            form.save()
+            sms_create = form.save(commit=False)
+            sms_create.user = request.user
+            sms_create.save()
             form = SmsForm()
             messages.success(request, "Message Successfully Sent")
     else:
         form = SmsForm()
-    return render(request, 'sms_create.html', {'form': form})
+    return render(request, 'sph_messages/sms_create.html', {'form': form})

@@ -38,47 +38,32 @@
             display: block; 
             margin-top: 200px;
             margin-left: 400px; 
-            position: absolute; 
+            position: absolute;
           }
     </style>
 
 </head>
 <body>
 
-<div class="center content">
+<div class="content center">
     <div class="container-fluid">
+        <div class="row">
 
             <div class="col-md-12">
                 <div class="card">
-                        
+                    
                     <div class="content">
-                        <div class="content">
-                            {% if form.non_field_errors %}
-                                  {% for error in form.non_field_errors %}
-                                    <div class="alert alert-danger alert-dismissable">
-                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                      {{ error }}
-                                    </div>
-                                  {% endfor %}
-                                {% endif %}
-                              <form class="form-signin" method="post" action="" role="form" >
-                                {% csrf_token %}
-                                <label for="inputUsername" class="sr-only">Username</label>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus><br>
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required><br>  
-                                <button class="btn btn-primary " type="submit">Sign in</button>
-                              </form>
-                        </div>
+                        {% include 'messages.html' %}
+                        {% block body %}
 
+                        {% endblock %}
                     </div>
-                </div>                    
-            </div>
 
+                </div>
+            </div>                    
         </div>
-
+    </div>
 </div>
-
 
 </body>
 

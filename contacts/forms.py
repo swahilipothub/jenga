@@ -19,6 +19,10 @@ class ContactForm(forms.ModelForm):
 	category = forms.ModelChoiceField(queryset=Contact_Group.objects.all(), 
 										widget=forms.Select(attrs={'class':'form-control'}))
 
+	# def __init__(group, *args, **args):
+	# 	super(ContactForm,self ).__init__(group,*args,**kwargs)
+	# 	self.fields['category'].queryset = Contact.objects.filter(user=request.user)
+
 	class Meta:
 		model  = Contact
 		fields = ('first_name', 'last_name', 'id_number', 'mobile', 'category')

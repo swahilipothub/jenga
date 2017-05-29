@@ -5,7 +5,7 @@ from contacts import views
 
 urlpatterns = [
     url(r'^groups/$', views.group_list, name='group_list'),
-    url(r'^groups/add/s$', views.group_create, name='group_create'),
+    url(r'^groups/add/$', views.group_create, name='group_create'),
     url(r'^groups/(?P<pk>\d+)/update/$', views.group_update, name='group_update'),
 ]
 

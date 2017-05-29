@@ -1,0 +1,19 @@
+{% extends "no_auth_base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+<div class="content">
+    <form class="form-signin" method="post" action="" role="form" >
+        {% csrf_token %}
+
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus><br>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required><br>  
+
+        <button class="btn btn-primary " type="submit">Sign in</button>
+        <a href="{% url 'signup' %}">Signup here</a>
+    </form>
+</div>
+{% endblock %}

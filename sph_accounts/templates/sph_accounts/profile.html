@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+
+{% block page_title %} Edit Profile {% endblock %}
+
+{% block body %}  
+  <div class="content">
+      <form action="" method="post">
+        {% csrf_token %}
+          <div class="panel-body">
+
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                {{ field }}
+
+                {% for error in field.errors %}
+                  <span class="help-block">{{ error }}</span>
+                {% endfor %}
+                
+                {% if field.help_text %}
+                  <span class="help-block">{{ field.help_text }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="panel-footer">
+            <button type="submit" class="btn btn-success btn-large">Save profile</button>
+          </div>
+      </form>
+  </div>
+{% endblock %}

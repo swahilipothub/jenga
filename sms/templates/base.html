@@ -153,8 +153,13 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <div class="dropdown">
-                                  <button class="dropbtn btn">Account Settings</button>
+                                  <button class="dropbtn btn"> {{ user.username }}'s Account Settings</button>
                                   <div class="dropdown-content">
+                                        <a href="{% url 'profile' %}">
+                                            <i class="pe-7s-settings"></i>
+                                            Account Profile
+                                        </a>
+
                                         <a href="{% url 'sms_settings_add' %}">
                                             <i class="pe-7s-settings"></i>
                                             Add Settings
