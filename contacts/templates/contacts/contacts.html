@@ -26,7 +26,7 @@
                                 <td style="">
                                     <a class="btn btn-warning btn-sm" href="{% url 'contact_update' contact.id %}">Edit</a>
 
-                                    <a class="btn btn-danger btn-sm js-delete-book" href="#">Delete</a>
+                                    <a class="btn btn-danger btn-sm js-delete-book" href="{% url 'contact_delete' contact.id %}">Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}

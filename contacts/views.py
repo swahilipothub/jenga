@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm
@@ -52,7 +52,7 @@ def contact_detail(request, pk, template='contacts/contact_detail.html'):
     return render_to_response(template, kwvars, RequestContext(request))
 
 
-@login_required
+@login_required(login_url='/login/')
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -74,13 +74,24 @@ def contact_update(request, pk):
     return render(request, 'contacts/contact_update.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='/login/')
+def contact_delete(request, pk, template_name='contacts/confirm_contact_delete.html'):
+    contact = get_object_or_404(Contact, pk=pk)    
+    if request.method=='POST':
+        contact.delete()
+        messages.success(request, "Contact Successfully Deleted")
+        return redirect('contact_list')
+    return render(request, template_name, {'object':contact})
+
+
+
+@login_required(login_url='/login/')
 def group_list(request):
     groups = Contact_Group.objects.filter(user=request.user).order_by('-created')
     return render(request, 'contacts/group_list.html', {'groups': groups})
 
 
-@login_required
+@login_required(login_url='/login/')
 def group_create(request):
     if request.method == 'POST':
         form = Contact_GroupForm(request.POST)
@@ -98,7 +109,7 @@ def group_create(request):
     return render(request, 'contacts/group_create.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='/login/')
 def group_update(request, pk):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
@@ -114,3 +125,13 @@ def group_update(request, pk):
     else:
         form = Contact_GroupForm(instance=group)
     return render(request, 'contacts/group_update.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def group_delete(request, pk, template_name='contacts/confirm_group_delete.html'):
+    group = get_object_or_404(Contact_Group, pk=pk)    
+    if request.method=='POST':
+        group.delete()
+        messages.success(request, "Group Successfully Deleted")
+        return redirect('group_list')
+    return render(request, template_name, {'object':group})

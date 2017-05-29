@@ -1,0 +1,13 @@
+{% extends "../base.html" %}
+{% load staticfiles %}
+
+{% block page_title %} Delete Group {% endblock %}
+
+{% block body %}
+<div class="content">
+	<form method="post">{% csrf_token %}
+	    Are you sure you want to delete "{{ object }}" ?
+	    <input type="submit" value="Delete this group" />
+	</form>
+</div>
+{% endblock %}
