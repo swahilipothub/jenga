@@ -22,12 +22,13 @@ def signup(request):
 
             current_site = get_current_site(request)
             subject = 'Activate Your MySite Account'
-            message = render_to_string('sph_accounts/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
+            message = render_to_string(
+                'sph_accounts/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
             user.email_user(subject, message)
 
             return redirect('account_activation_sent')
@@ -63,8 +64,9 @@ def profile(request):
         form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            messages.success(request, u'Your profile were successfully edited.')
+            messages.success(request,
+                             u'Your profile were successfully edited.')
             return redirect('profile')
     else:
         form = ProfileForm(instance=request.user.profile)
-    return render(request, 'sph_accounts/profile.html', { 'form': form })
+    return render(request, 'sph_accounts/profile.html', {'form': form})
