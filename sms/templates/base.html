@@ -156,7 +156,7 @@
                                   <button class="dropbtn btn"> {{ user.username }}'s Account Settings</button>
                                   <div class="dropdown-content">
                                         <a href="{% url 'profile' %}">
-                                            <i class="pe-7s-settings"></i>
+                                            <i class="pe-7s-user"></i>
                                             Account Profile
                                         </a>
 
@@ -166,8 +166,13 @@
                                         </a>
 
                                         <a href="{% url 'sms_settings_list' %}">
-                                            <i class="pe-7s-switch"></i>
+                                            <i class="pe-7s-config"></i>
                                             Settings
+                                        </a>
+
+                                        <a href="{% url 'user_balance' %}">
+                                            <i class="pe-7s-wallet"></i>
+                                            Balance
                                         </a>
                                         
                                         <a href="{% url 'logout' %}">

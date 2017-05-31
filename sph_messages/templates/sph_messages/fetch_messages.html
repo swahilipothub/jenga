@@ -1,0 +1,17 @@
+{% extends "../base.html" %}
+{% load staticfiles %}
+
+{% block page_title %} Availlable Settings {% endblock %}
+
+{% block body %}
+<div class="content">
+    {% for message in object %}
+    	{{ message.message_from }}
+    	{{ message.message_to }}
+    	{{ message.message_date }}
+    	{{ message.message_text }}
+    	{{ message.message_linkID }}
+    	{{ message.message_id }}
+    {% endfor %}
+</div>                  
+{% endblock %}

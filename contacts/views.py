@@ -16,7 +16,7 @@ def contact_list(request):
 @login_required(login_url='/login/')
 def contact_create(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(request.user, request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -28,10 +28,10 @@ def contact_create(request):
             contact_create.user = request.user
             contact_create.save()
 
-            form = ContactForm()
+            form = ContactForm(request.user)
             messages.success(request, "Contact Successfully Created")
     else:
-        form = ContactForm()
+        form = ContactForm(request.user)
     return render(request, 'contacts/contact_create.html', {'form': form})
 
 
@@ -56,7 +56,7 @@ def contact_detail(request, pk, template='contacts/contact_detail.html'):
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
-        form = ContactForm(request.POST, instance=contact)
+        form = ContactForm(request.user, request.POST, instance=contact)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -70,7 +70,7 @@ def contact_update(request, pk):
 
             messages.success(request, "Contact Successfully Updated")
     else:
-        form = ContactForm(instance=contact)
+        form = ContactForm(request.user, instance=contact)
     return render(request, 'contacts/contact_update.html', {'form': form})
 
 

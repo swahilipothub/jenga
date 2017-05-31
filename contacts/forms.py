@@ -16,15 +16,14 @@ class ContactForm(forms.ModelForm):
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	id_number = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-	category = forms.ModelChoiceField(queryset=Contact_Group.objects.all(), 
-										widget=forms.Select(attrs={'class':'form-control'}))
-
-	# def __init__(group, *args, **args):
-	# 	super(ContactForm,self ).__init__(group,*args,**kwargs)
-	# 	self.fields['category'].queryset = Contact.objects.filter(user=request.user)
+	category = forms.ModelChoiceField(queryset=None, 
+									widget=forms.Select(attrs={'class':'form-control'}))
 
 	class Meta:
 		model  = Contact
 		fields = ('first_name', 'last_name', 'id_number', 'mobile', 'category')
 
 		
+	def __init__(self, user, *args, **kwargs):
+	    super(ContactForm, self).__init__(*args, **kwargs)
+	    self.fields['category'].queryset = Contact_Group.objects.filter(user=user)

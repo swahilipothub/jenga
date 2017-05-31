@@ -13,6 +13,7 @@ from .models import Sms, SmsSettings
 username = secrets.USERNAME
 apikey   = secrets.APIKEY
 gateway  = AfricasTalkingGateway(username, apikey)
+sender = "Jenga"
 
 
 @login_required
@@ -68,7 +69,7 @@ def sms_list(request):
 @login_required
 def sms_create(request):
     if request.method == 'POST':
-        form = SmsForm(request.POST)
+        form = SmsForm(request.user, request.POST)
         if form.is_valid():
             category = form.cleaned_data['category']
             message  = form.cleaned_data['message']
@@ -82,8 +83,34 @@ def sms_create(request):
             sms_create = form.save(commit=False)
             sms_create.user = request.user
             sms_create.save()
-            form = SmsForm()
+            form = SmsForm(request.user)
             messages.success(request, "Message Successfully Sent")
     else:
-        form = SmsForm()
+        form = SmsForm(request.user)
     return render(request, 'sph_messages/sms_create.html', {'form': form})
+
+
+@login_required
+def sms_fetch(request, template_name='sph_messages/fetch_messages.html'):
+    lastReceivedId = 0;    
+    while True:
+        messages = gateway.fetchMessages(lastReceivedId)
+        for message in messages:
+            message_from = message['from']
+            messate_to = message['to']
+            message_date = message['date']
+            message_text = message['text']
+            message_linkID = message['linkID']
+            lastReceivedId = message['id']
+
+            return render(request, template_name, {'object':message})
+
+
+@login_required
+def user_balance(request):
+    try:
+        user = gateway.getUserData()
+        balance = user['balance']
+        return render(request, 'sph_messages/balance.html', {'object': balance})
+    except AfricasTalkingGatewayException, e:
+        print 'Error: %s' % str(e)
