@@ -1,0 +1,13 @@
+CHANGELOG.rst
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+pyexcel_xlsx/__init__.py
+pyexcel_xlsx/xlsx.py
+pyexcel_xlsx.egg-info/PKG-INFO
+pyexcel_xlsx.egg-info/SOURCES.txt
+pyexcel_xlsx.egg-info/dependency_links.txt
+pyexcel_xlsx.egg-info/not-zip-safe
+pyexcel_xlsx.egg-info/requires.txt
+pyexcel_xlsx.egg-info/top_level.txt

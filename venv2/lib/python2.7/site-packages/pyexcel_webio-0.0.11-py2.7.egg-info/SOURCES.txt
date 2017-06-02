@@ -1,0 +1,12 @@
+CHANGELOG.rst
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+pyexcel_webio/__init__.py
+pyexcel_webio.egg-info/PKG-INFO
+pyexcel_webio.egg-info/SOURCES.txt
+pyexcel_webio.egg-info/dependency_links.txt
+pyexcel_webio.egg-info/not-zip-safe
+pyexcel_webio.egg-info/requires.txt
+pyexcel_webio.egg-info/top_level.txt

@@ -1,0 +1,5 @@
+texttable.py
+texttable.egg-info/PKG-INFO
+texttable.egg-info/SOURCES.txt
+texttable.egg-info/dependency_links.txt
+texttable.egg-info/top_level.txt

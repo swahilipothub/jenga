@@ -1,0 +1,13 @@
+CHANGELOG.rst
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+django_excel/__init__.py
+django_excel/_compact.py
+django_excel.egg-info/PKG-INFO
+django_excel.egg-info/SOURCES.txt
+django_excel.egg-info/dependency_links.txt
+django_excel.egg-info/not-zip-safe
+django_excel.egg-info/requires.txt
+django_excel.egg-info/top_level.txt

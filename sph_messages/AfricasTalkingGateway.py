@@ -14,6 +14,8 @@
 
 import urllib
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+from urllib.parse import urlencode
 import json
 
 class AfricasTalkingGatewayException(Exception):
@@ -284,16 +286,16 @@ class AfricasTalkingGateway:
             headers = {'Accept' : 'application/json',
                        'apikey' : self.apiKey}
             if data_ is not None:
-                data    = urllib.urlencode(data_)
-                request = urllib2.Request(urlString, data, headers = headers)
+                data    = urlencode(data_).encode("utf-8")
+                request = Request(urlString, data, headers = headers)
             else:
-                request = urllib2.Request(urlString, headers = headers)
-            response = urllib2.urlopen(request)
-        except urllib2.HTTPError as e:
+                request = Request(urlString, headers = headers)
+            response = urlopen(request)
+        except HTTPError as e:
             raise AfricasTalkingGatewayException(e.read())
         else:
             self.responseCode = response.getcode()
-            response          = ''.join(response.readlines())
+            response          = ''.join(map(bytes.decode, response.readlines()))
             if self.Debug:
                 print ("Raw response: " + response)
                 
@@ -304,11 +306,11 @@ class AfricasTalkingGateway:
             headers  = {'Accept'       : 'application/json',
                         'Content-Type' : 'application/json',
                         'apikey'       : self.apiKey}
-            request  = urllib2.Request(urlString,
+            request  = Request(urlString,
                                        data_,
                                        headers = headers)
-            response = urllib2.urlopen(request)
-        except urllib2.HTTPError as e:
+            response = urlopen(request)
+        except HTTPError as e:
             raise AfricasTalkingGatewayException(e.read())
         else:
             self.responseCode = response.getcode()

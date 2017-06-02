@@ -1,0 +1,258 @@
+Metadata-Version: 1.1
+Name: pyexcel-webio
+Version: 0.0.11
+Summary: A generic request and response interface for pyexcel web extensions.
+Home-page: UNKNOWN
+Author: C.W.
+Author-email: wangc_2011 (at) hotmail.com
+License: New BSD
+Description: ================================================================================
+        pyexcel-webio - Let you focus on data, instead of file formats
+        ================================================================================
+        
+        .. image:: https://api.travis-ci.org/pyexcel/pyexcel-webio.svg?branch=master
+           :target: http://travis-ci.org/pyexcel/pyexcel-webio
+        
+        .. image:: https://codecov.io/github/pyexcel/pyexcel-webio/coverage.png
+            :target: https://codecov.io/github/pyexcel/pyexcel-webio
+        
+        
+        Known constraints
+        ==================
+        
+        Fonts, colors and charts are not supported.
+        
+        **pyexcel-webio** is a tiny interface library to unify the web extensions that uses `pyexcel <https://github.com/pyexcel/pyexcel>`__ . You may use it to write a web extension for your faviourite Python web framework.
+        
+        
+        
+        Installation
+        ================================================================================
+        You can install it via pip:
+        
+        .. code-block:: bash
+        
+            $ pip install pyexcel-webio
+        
+        
+        or clone it and install it:
+        
+        .. code-block:: bash
+        
+            $ git clone http://github.com/pyexcel/pyexcel-webio.git
+            $ cd pyexcel-webio
+            $ python setup.py install
+        
+        
+        Known extensions
+        =======================
+        
+        ============== ============================
+        framework      plugin/middleware/extension
+        ============== ============================
+        Flask          `Flask-Excel`_
+        Django         `django-excel`_
+        Pyramid        `pyramid-excel`_
+        ============== ============================
+        
+        .. _Flask-Excel: https://github.com/pyexcel/Flask-Excel
+        .. _django-excel: https://github.com/pyexcel/django-excel
+        .. _pyramid-excel: https://github.com/pyexcel/pyramid-excel
+        
+        
+        Usage
+        =========
+        
+        This small section outlines the steps to adapt **pyexcel-webio** for your favourite web framework. For illustration purpose, I took **Flask** micro-framework as an example.
+        
+        1. Inherit **ExcelInput** class and implement **load_single_sheet** and **load_book** methods depending on the parameters you will have. For example, **Flask.Request** put the incoming file in **Flask.Request.files** and the key is the field name in the html form::
+        
+            from flask import Flask, Request
+            import pyexcel as pe
+            from pyexcel.ext import webio
+        
+            class ExcelRequest(webio.ExcelInput, Request):
+                def _get_file_tuple(self, field_name):
+                    filehandle = self.files[field_name]
+                    filename = filehandle.filename
+                    extension = filename.split(".")[1]
+                    return extension, filehandle
+        
+                def load_single_sheet(self, field_name=None, sheet_name=None,
+                                      **keywords):
+                    file_type, file_handle = self._get_file_tuple(field_name)
+                    return pe.get_sheet(file_type=file_type,
+                                        content=file_handle.read(),
+                                        sheet_name=sheet_name,
+                                        **keywords)
+        
+                def load_book(self, field_name=None, **keywords):
+                    file_type, file_handle = self._get_file_tuple(field_name)
+                    return pe.get_book(file_type=file_type,
+                                       content=file_handle.read(),
+                                       **keywords)
+        
+        2. Plugin in a response method that has the following signature::
+        
+               def your_func(content, content_type=None, status=200):
+                   ....
+        
+           or a response class has the same signature::
+        
+               class YourClass:
+                   def __init__(self, content, content_type=None, status=200):
+                   ....
+        
+           For example, with **Flask**, it is just a few lines::
+        
+               from flask import Response
+        
+        
+               webio.ExcelResponse = Response
+        
+        
+        3. Then make the proxy for **make_response** series by simply copying the following lines to your extension::
+        
+            from pyexcel.ext.webio import (
+                make_response,
+                make_response_from_array,
+                make_response_from_dict,
+                make_response_from_records,
+                make_response_from_book_dict
+            )
+        
+        Development guide
+        ================================================================================
+        
+        Development steps for code changes
+        
+        #. git clone https://github.com/pyexcel/pyexcel-webio.git
+        #. cd pyexcel-webio
+        
+        Upgrade your setup tools and pip. They are needed for development and testing only:
+        
+        #. pip install --upgrade setuptools "pip==7.1"
+        
+        Then install relevant development requirements:
+        
+        #. pip install -r rnd_requirements.txt # if such a file exists
+        #. pip install -r requirements.txt
+        #. pip install -r tests/requirements.txt
+        
+        
+        In order to update test environment, and documentation, additional steps are
+        required:
+        
+        #. pip install moban
+        #. git clone https://github.com/pyexcel/pyexcel-commons.git commons
+        #. make your changes in `.moban.d` directory, then issue command `moban`
+        
+        What is rnd_requirements.txt
+        -------------------------------
+        
+        Usually, it is created when a dependent library is not released. Once the dependecy is installed(will be released), the future version of the dependency in the requirements.txt will be valid.
+        
+        What is pyexcel-commons
+        ---------------------------------
+        
+        Many information that are shared across pyexcel projects, such as: this developer guide, license info, etc. are stored in `pyexcel-commons` project.
+        
+        What is .moban.d
+        ---------------------------------
+        
+        `.moban.d` stores the specific meta data for the library.
+        
+        How to test your contribution
+        ------------------------------
+        
+        Although `nose` and `doctest` are both used in code testing, it is adviable that unit tests are put in tests. `doctest` is incorporated only to make sure the code examples in documentation remain valid across different development releases.
+        
+        On Linux/Unix systems, please launch your tests like this::
+        
+            $ make
+        
+        On Windows systems, please issue this command::
+        
+            > test.bat
+        
+        
+        License
+        ================================================================================
+        
+        New BSD License
+        
+        Change log
+        ================================================================================
+        
+        0.0.11 - 04.03.2017
+        --------------------------------------------------------------------------------
+        
+        Updated
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        #. `#4 <https://github.com/pyexcel/pyexcel-webio/issues/4>`_: extra keywords
+           were not passed on to pyexcel
+        
+        0.0.10 - 22.12.2016
+        --------------------------------------------------------------------------------
+        
+        Updated
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        #. `#3 <https://github.com/pyexcel/pyexcel-webio/issues/3>`_: raise exception
+           if uploaded file has no content read.
+        
+        
+        0.0.9 - 22.12.2016
+        --------------------------------------------------------------------------------
+        
+        Updated
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        #. Flask-Excel `issue 19 <https://github.com/pyexcel/Flask-Excel/issues/19>`_:
+           sheet_name parameter to control sheet name
+        #. use pyexcel v0.4.0
+        
+        0.0.8 - 28.10.2016
+        --------------------------------------------------------------------------------
+        
+        Updated
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        #. use pyexcel v0.3.0
+        
+        0.0.7 - 01.06.2016
+        --------------------------------------------------------------------------------
+        
+        Updated
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        #. use pyexcel v0.2.2
+        
+        
+Keywords: excel,python,pyexcel,http
+Platform: UNKNOWN
+Classifier: Topic :: Office/Business
+Classifier: Topic :: Utilities
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Programming Language :: Python
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Environment :: Web Environment
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: Implementation :: PyPy
