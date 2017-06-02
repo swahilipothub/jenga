@@ -149,3 +149,6 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'sms_create'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")

@@ -24,9 +24,9 @@
                                 <td> {{ contact.category }}</td>
                                 
                                 <td style="">
-                                    <a class="btn btn-warning btn-sm" href="{% url 'contact_update' contact.id %}">Edit</a>
+                                    <a class="btn btn-warning btn-sm btn-round" href="{% url 'contact_update' contact.id %}"><i class="fa fa-edit"></i>Edit</a>
 
-                                    <a class="btn btn-danger btn-sm js-delete-book" href="{% url 'contact_delete' contact.id %}">Delete</a>
+                                    <a class="btn btn-danger btn-sm btn-round" href="{% url 'contact_delete' contact.id %}"><i class="fa fa-times"></i>Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}

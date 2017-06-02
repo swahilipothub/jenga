@@ -18,9 +18,9 @@
                         <tr>
                             <td> {{ group.name }} </td>
                             <td style="">
-    	                          <a class="btn btn-warning btn-sm" href="{% url 'group_update' group.id %}">Edit</a>
+    	                          <a class="btn btn-warning btn-sm btn-round" href="{% url 'group_update' group.id %}"><i class="fa fa-edit"></i>Edit</a>
 
-                                  <a class="btn btn-danger btn-sm js-delete-book" href="{% url 'group_delete' group.id %}">Delete</a>
+                                  <a class="btn btn-danger btn-sm btn-round" href="{% url 'group_delete' group.id %}"><i class="fa fa-times"></i>Delete</a>
 	                        </td>
                         </tr>
                     {% endfor %}

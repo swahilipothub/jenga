@@ -48,7 +48,7 @@ class Contact(models.Model):
     last_name = models.CharField(max_length=100)
     mobile = models.CharField(max_length=12, help_text='start with 254xxxxxxxx')
     id_number = models.CharField(max_length=8)
-    category = models.ForeignKey(Contact_Group)
+    category = models.ForeignKey(Contact_Group, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -11,6 +11,10 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+	url(r'^import_sheet/$', views.import_sheet, name="import_sheet"),
+]
+
+urlpatterns += [
     url(r'^add/$', views.contact_create, name='contact_create'),
     url(r'^(?P<pk>\d+)/edit/$', views.contact_update, name='contact_update'),
     url(r'^delete/(?P<pk>\d+)/$', views.contact_delete, name='contact_delete'),

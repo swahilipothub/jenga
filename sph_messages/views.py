@@ -70,6 +70,10 @@ def sms_list(request):
 def sms_create(request):
     if request.method == 'POST':
         form = SmsForm(request.user, request.POST)
+        bulkSMSMode = 1
+        sender = None
+        enqueue = 1
+
         if form.is_valid():
             category = form.cleaned_data['category']
             message  = form.cleaned_data['message']
@@ -78,7 +82,7 @@ def sms_create(request):
             category_id   = category_name.id
             recipients    = Contact.objects.values_list('mobile', flat=True).filter(category=category_id)
             to            = ",".join(recipients)
-            results       = gateway.sendMessage(to, message)
+            results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
 
             sms_create = form.save(commit=False)
             sms_create.user = request.user
@@ -114,3 +118,31 @@ def user_balance(request):
         return render(request, 'sph_messages/balance.html', {'object': balance})
     except AfricasTalkingGatewayException, e:
         print 'Error: %s' % str(e)
+
+
+# @login_required
+# def sms_queue(request):
+#     if request.method == 'POST':
+#         form = SmsForm(request.user, request.POST)
+#         bulkSMSMode = 1
+#         sender = None
+#         enqueue = 1
+
+#         if form.is_valid():
+#             category = form.cleaned_data['category']
+#             message  = form.cleaned_data['message']
+
+#             category_name = Contact_Group.objects.get(name=category)
+#             category_id   = category_name.id
+#             recipients    = Contact.objects.values_list('mobile', flat=True).filter(category=category_id)
+#             to            = ",".join(recipients)
+#             results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+
+#             sms_queue = form.save(commit=False)
+#             sms_queue.user = request.user
+#             sms_queue.save()
+#             form = SmsForm(request.user)
+#             messages.success(request, "Message Put on Queue")
+#     else:
+#         form = SmsForm(request.user)
+#     return render(request, 'sph_messages/sms_queue.html', {'form': form})

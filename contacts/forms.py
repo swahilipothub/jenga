@@ -27,3 +27,7 @@ class ContactForm(forms.ModelForm):
 	def __init__(self, user, *args, **kwargs):
 	    super(ContactForm, self).__init__(*args, **kwargs)
 	    self.fields['category'].queryset = Contact_Group.objects.filter(user=user)
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

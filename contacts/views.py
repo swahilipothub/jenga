@@ -3,8 +3,11 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Contact, Contact_Group
-from .forms import ContactForm, Contact_GroupForm
+from .forms import ContactForm, Contact_GroupForm, UploadFileForm
 
+from django.http import HttpResponseBadRequest, HttpResponse
+# from _compact import JsonResponse
+import django_excel as excel
 
 # Contact list.
 @login_required(login_url='/login/')
@@ -135,3 +138,22 @@ def group_delete(request, pk, template_name='contacts/confirm_group_delete.html'
         messages.success(request, "Group Successfully Deleted")
         return redirect('group_list')
     return render(request, template_name, {'object':group})
+
+
+@login_required(login_url='/login/')
+def import_sheet(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.user, request.POST, request.FILES)
+        if form.is_valid():
+            import_sheet = request.FILES['file'].save_to_database(
+                            model=Contact,
+                            mapdict=['first_name', 'last_name', 'mobile', 'id_number', 'category'],
+                            commit=False)
+            import_sheet.user = request.user
+            import_sheet.save_to_database()
+            return HttpResponse("OK")
+        else:
+            return HttpResponseBadRequest("Bad Request")
+    else:
+        form = UploadFileForm()
+    return render(request, 'contacts/upload_form.html', {'form': form})
