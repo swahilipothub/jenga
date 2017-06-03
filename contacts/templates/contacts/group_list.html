@@ -14,6 +14,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {% if groups %}
                     {% for group in groups %}
                         <tr>
                             <td> {{ group.name }} </td>
@@ -24,6 +25,15 @@
 	                        </td>
                         </tr>
                     {% endfor %}
+                    <!--When there is no groups created yet.-->
+                    {% else %}
+                        <tr>
+                            <td> No groups created yet. </td>
+                            <td style="">
+    	                          <a class="btn btn-info btn-sm" href="{% url 'group_create' %}">Add Group</a>
+	                        </td>
+                        </tr>
+                    {% endif %}
                         
                     </tbody>
                 </table>
