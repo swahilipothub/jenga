@@ -1,16 +1,7 @@
 from django import forms
 
 from contacts.models import Contact_Group
-from .models import Sms, SmsSettings
-
-
-class SmsSettingsForm(forms.ModelForm):
-    user_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    api_key = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-
-    class Meta:
-        model = SmsSettings
-        fields = ('user_name', 'api_key')
+from .models import Sms
 
 
 class SmsForm(forms.ModelForm):

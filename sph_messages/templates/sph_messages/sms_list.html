@@ -17,7 +17,7 @@
                 <tbody>
                 {% for sms in sms_list %}
                     <tr>
-                        <td> {{ sms.category }} </td>
+                        <td> {{ sms.category }} <br> <small style="color: green">{{ sms.recipient_count }} recipients</small> </td>
                         <td> {{ sms.message}} </td>
                         <td> {{ sms.created }} </td>
                     </tr>

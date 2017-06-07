@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 
+from . import views 
 from sph_accounts import views as core_views
 
 
@@ -12,6 +13,7 @@ urlpatterns = [
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         core_views.activate, name='activate'),
     url(r'^profile/$', core_views.profile, name='profile'),
+    url(r'^dashboard/$', views.dashboard, name='dashboard'),
 ]
 
 urlpatterns += [

@@ -6,8 +6,8 @@ from sms import secrets
 from contacts.models import Contact, Contact_Group
 
 from .AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
-from .forms import SmsSettingsForm, SmsForm
-from .models import Sms, SmsSettings
+from .forms import SmsForm
+from .models import Sms
 
 
 username = secrets.USERNAME
@@ -38,10 +38,14 @@ def sms_create(request):
             category_id   = category_name.id
             recipients    = Contact.objects.values_list('mobile', flat=True).filter(category=category_id)
             to            = ",".join(recipients)
-            results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+            # results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
 
             sms_create = form.save(commit=False)
             sms_create.user = request.user
+            group_contacts = Contact.objects.values_list('first_name', flat=True).filter(category=category_id)
+            sms_create.recipient_list = ",".join(group_contacts)
+            sms_create.recipient_count = group_contacts.count()
+
             sms_create.save()
             form = SmsForm(request.user)
             messages.success(request, "Message Successfully Sent")

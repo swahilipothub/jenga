@@ -11,10 +11,12 @@ from contacts.models import Contact_Group
 
 @python_2_unicode_compatible
 class Sms(models.Model):
-	user     = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	category = models.ForeignKey(Contact_Group)
-	message  = models.TextField()
-	created  = models.DateTimeField(auto_now_add=True)	
+	recipient_list = models.CharField(max_length=13000, null=True, blank=True, editable=False)
+	recipient_count = models.CharField(max_length=10, null=True, blank=True, editable=False)
+	message = models.TextField()
+	created = models.DateTimeField(auto_now_add=True)	
 
 	class Meta:
 		db_table = 'sph_messages'
@@ -41,11 +43,11 @@ class Sms(models.Model):
 	    })
 
 
-class SmsSettings(models.Model):
-	user 	  = models.ForeignKey(User, on_delete=models.CASCADE)
-	user_name = models.CharField(max_length=255)
-	api_key   = models.CharField(max_length=256)
-	created   = models.DateTimeField(auto_now_add=True)
+# class SmsSettings(models.Model):
+# 	user 	  = models.ForeignKey(User, on_delete=models.CASCADE)
+# 	user_name = models.CharField(max_length=255)
+# 	api_key   = models.CharField(max_length=256)
+# 	created   = models.DateTimeField(auto_now_add=True)
 
-	class Meta:
-		db_table = 'sph_settings'	
+# 	class Meta:
+# 		db_table = 'sph_settings'	
