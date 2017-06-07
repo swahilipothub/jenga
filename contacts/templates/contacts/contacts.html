@@ -12,6 +12,7 @@
                                 <th>Name</th>
                                 <th>Mobile Number</th>
                                 <th>ID Number</th>
+                                <th>Email</th>
                                 <th>Category</th>
                             </tr>
                         </thead>
@@ -21,12 +22,13 @@
                                 <td> {{ contact.first_name }} {{ contact.last_name}}</td>
                                 <td> {{ contact.mobile }} </td>
                                 <td> {{ contact.id_number }} </td>
+                                <td> {{ contact.email }}</td>
                                 <td> {{ contact.category }}</td>
                                 
                                 <td style="">
-                                    <a class="btn btn-warning btn-sm btn-round" href="{% url 'contact_update' contact.id %}"><i class="fa fa-edit"></i>Edit</a>
+                                    <a class="btn btn-warning btn-xs btn-round" href="{% url 'contact_update' contact.id %}"><i class="fa fa-edit"></i>Edit</a>
 
-                                    <a class="btn btn-danger btn-sm btn-round" href="{% url 'contact_delete' contact.id %}"><i class="fa fa-times"></i>Delete</a>
+                                    <a class="btn btn-danger btn-xs btn-round" href="{% url 'contact_delete' contact.id %}"><i class="fa fa-times"></i>Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}

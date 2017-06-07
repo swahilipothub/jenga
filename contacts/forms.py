@@ -16,12 +16,13 @@ class ContactForm(forms.ModelForm):
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	id_number = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+	email = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	category = forms.ModelChoiceField(queryset=None, 
 									widget=forms.Select(attrs={'class':'form-control'}))
 
 	class Meta:
 		model  = Contact
-		fields = ('first_name', 'last_name', 'id_number', 'mobile', 'category')
+		fields = ('first_name', 'last_name', 'id_number', 'mobile', 'email', 'category')
 
 		
 	def __init__(self, user, *args, **kwargs):

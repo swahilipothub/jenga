@@ -1,33 +1,30 @@
 {% extends "../base.html" %}
 {% load staticfiles %}
 
-{% block page_title %} Groups {% endblock %}
+{% block page_title %} {{ group_count }} Groups {% endblock %}
 
 {% block body %}
-    <div class="content">
+<div class="content">
+     <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in groups %}
+                    <tr>
+                        <td> {{ group.name }} </td>
+                        <td style="">
+                              <a class="btn btn-warning btn-xs btn-round" href="{% url 'group_update' group.id %}"><i class="fa fa-edit"></i>Edit</a>
 
-             <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>Group Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for group in groups %}
-                        <tr>
-                            <td> {{ group.name }} </td>
-                            <td style="">
-    	                          <a class="btn btn-warning btn-sm btn-round" href="{% url 'group_update' group.id %}"><i class="fa fa-edit"></i>Edit</a>
-
-                                  <a class="btn btn-danger btn-sm btn-round" href="{% url 'group_delete' group.id %}"><i class="fa fa-times"></i>Delete</a>
-	                        </td>
-                        </tr>
-                    {% endfor %}
-                        
-                    </tbody>
-                </table>
-            </div>
-
-    	</div>       
+                              <a class="btn btn-danger btn-xs btn-round" href="{% url 'group_delete' group.id %}"><i class="fa fa-times"></i>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>       
 {% endblock %}

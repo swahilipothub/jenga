@@ -7,13 +7,18 @@ from .forms import ContactForm, Contact_GroupForm, UploadFileForm
 
 from django.http import HttpResponseBadRequest, HttpResponse
 # from _compact import JsonResponse
-import django_excel as excel
+# import django_excel as excel
 
 # Contact list.
 @login_required(login_url='/login/')
 def contact_list(request):
     contacts = Contact.objects.filter(user=request.user).order_by('-created')
     return render(request, 'contacts/contacts.html', {'contacts': contacts})
+
+@login_required(login_url='/login/')
+def contact_count(request):
+    contact_count = Contact.objects.filter(user=request.user).count()
+    return render(request, 'contacts/contact_count.html', {'contact_count': contact_count})
 
 
 @login_required(login_url='/login/')
@@ -92,6 +97,11 @@ def contact_delete(request, pk, template_name='contacts/confirm_contact_delete.h
 def group_list(request):
     groups = Contact_Group.objects.filter(user=request.user).order_by('-created')
     return render(request, 'contacts/group_list.html', {'groups': groups})
+
+@login_required
+def group_count(request):
+    group_count = Contact_Group.objects.filter(user=request.user).count()
+    return render(request, 'contacts/group_count.html', {'group_count': group_count})
 
 
 @login_required(login_url='/login/')

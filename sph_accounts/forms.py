@@ -17,30 +17,16 @@ class SignUpForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=30, required=False)
-    last_name = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=30, required=False)
-    public_email = forms.CharField(widget=forms.EmailInput(attrs={ 'class': 'form-control' }), max_length=254, required=False)
-    # url = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=50, required=False)
     institution = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=50, required=False)
-    location = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=50, required=False)
-    # bio = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control'}))
-
-    def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
-        try:
-            self.fields['first_name'].initial = self.instance.user.first_name
-            self.fields['last_name'].initial = self.instance.user.last_name
-        except User.DoesNotExist:
-            pass
-
+    location = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control' }), max_length=30, required=False)
+    public_email = forms.CharField(widget=forms.EmailInput(attrs={ 'class': 'form-control' }), max_length=254, required=False)
+    
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'public_email', 'institution', 'location']
+        fields = ['institution', 'location', 'public_email']
 
     def save(self, *args, **kwargs):
         u = self.instance.user
-        u.first_name = self.cleaned_data['first_name']
-        u.last_name = self.cleaned_data['last_name']
         u.save()
         profile = super(ProfileForm, self).save(*args,**kwargs)
         return profile
