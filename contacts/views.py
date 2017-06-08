@@ -28,7 +28,6 @@ def contact_create(request):
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
-            id_number = form.cleaned_data['id_number']
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
 
@@ -68,7 +67,6 @@ def contact_update(request, pk):
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
-            id_number = form.cleaned_data['id_number']
             mobile = form.cleaned_data['mobile']
             category = form.cleaned_data['category']
 
