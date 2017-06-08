@@ -10,9 +10,8 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Mobile Number</th>
-                                <th>ID Number</th>
                                 <th>Email</th>
+                                <th>Mobile Number</th>
                                 <th>Category</th>
                             </tr>
                         </thead>
@@ -20,9 +19,8 @@
                         {% for contact in contacts %}
                             <tr>
                                 <td> {{ contact.first_name }} {{ contact.last_name}}</td>
-                                <td> {{ contact.mobile }} </td>
-                                <td> {{ contact.id_number }} </td>
-                                <td> {{ contact.email }}</td>
+                                <td> {{ contact.email }} </td>
+                                <td> {{ contact.mobile }}</td>
                                 <td> {{ contact.category }}</td>
                                 
                                 <td style="">

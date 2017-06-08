@@ -27,29 +27,20 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                <label>Mobile Number</label>
-                {{ form.mobile }}
-                {% if form.mobile.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.mobile.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label>ID Number</label>
-                {{ form.id_number }}
-                {% if form.id_number.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.id_number.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
                 <label>Email</label>
                 {{ form.email }}
                 {% if form.email.errors %}
                   <span class="help-block" style="color: red">
                     {% for error in form.email.errors %}{{ error }}{% endfor %}
+                  </span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                {{ form.mobile }}
+                {% if form.mobile.errors %}
+                  <span class="help-block" style="color: red">
+                    {% for error in form.mobile.errors %}{{ error }}{% endfor %}
                   </span>
                 {% endif %}
             </div>
