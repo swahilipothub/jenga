@@ -38,7 +38,7 @@ def sms_create(request):
             category_id   = category_name.id
             recipients    = Contact.objects.values_list('mobile', flat=True).filter(category=category_id)
             to            = ",".join(recipients)
-            # results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+            results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
 
             sms_create = form.save(commit=False)
             sms_create.user = request.user
