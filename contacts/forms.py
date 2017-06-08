@@ -14,7 +14,6 @@ class Contact_GroupForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-	id_number = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	email = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 	category = forms.ModelChoiceField(queryset=None, 
@@ -22,7 +21,7 @@ class ContactForm(forms.ModelForm):
 
 	class Meta:
 		model  = Contact
-		fields = ('first_name', 'last_name', 'id_number', 'mobile', 'email', 'category')
+		fields = ('first_name', 'last_name', 'email', 'mobile', 'category')
 
 		
 	def __init__(self, user, *args, **kwargs):
