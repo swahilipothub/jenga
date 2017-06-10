@@ -20,6 +20,7 @@ urlpatterns += [
     url(r'^count/$', views.contact_count, name='contact_count'),
     url(r'^(?P<pk>\d+)/edit/$', views.contact_update, name='contact_update'),
     url(r'^delete/(?P<pk>\d+)/$', views.contact_delete, name='contact_delete'),
+    url(r'^export/$', views.export_contact_csv, name='export_contact_csv'),
     url(r'^$', views.contact_list, name='contact_list'),   
 ]
 

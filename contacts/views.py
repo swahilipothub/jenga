@@ -1,3 +1,4 @@
+import csv
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
@@ -165,3 +166,15 @@ def import_sheet(request):
     else:
         form = UploadFileForm()
     return render(request, 'contacts/upload_form.html', {'form': form})
+
+
+@login_required
+def export_contact_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['First name', 'Last name', 'Email address', 'Mobile Number', 'Group' ])
+    contacts = Contact.objects.filter(user=request.user).values_list('first_name', 'last_name', 'email', 'mobile', 'category_id')
+    for contact in contacts:
+        writer.writerow(contact)
+    return response
