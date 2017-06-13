@@ -5,26 +5,39 @@
 
 {% block body %}
 <div class="content">
-     <div class="table-responsive">
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Group Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for group in groups %}
-                    <tr>
-                        <td> {{ group.name }} </td>
-                        <td style="">
-                              <a class="btn btn-warning btn-xs btn-round" href="{% url 'group_update' group.id %}"><i class="fa fa-edit"></i>Edit</a>
+    
+             <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Group Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% if groups %}
+                    {% for group in groups %}
+                        <tr>
+                            <td> {{ group.name }} </td>
+                            <td style="">
+    	                          <a class="btn btn-warning btn-sm" href="{% url 'group_update' group.id %}">Edit</a>
 
-                              <a class="btn btn-danger btn-xs btn-round" href="{% url 'group_delete' group.id %}"><i class="fa fa-times"></i>Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>       
+                                  <a class="btn btn-danger btn-sm js-delete-book" href="{% url 'group_delete' group.id %}">Delete</a>
+	                        </td>
+                        </tr>
+                    {% endfor %}
+                    <!--When there is no groups created yet.-->
+                    {% else %}
+                        <tr>
+                            <td> No groups created yet. </td>
+                            <td style="">
+    	                          <a class="btn btn-info btn-sm" href="{% url 'group_create' %}">Add Group</a>
+	                        </td>
+                        </tr>
+                    {% endif %}
+                        
+                    </tbody>
+                </table>
+            </div>
+
+    	</div>
 {% endblock %}

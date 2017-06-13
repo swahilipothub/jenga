@@ -17,6 +17,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {% if contacts %}
                         {% for contact in contacts %}
                             <tr>
                                 <td> {{ contact.first_name }} {{ contact.last_name}}</td>
@@ -30,8 +31,16 @@
                                     <a class="btn btn-danger btn-xs btn-round" href="{% url 'contact_delete' contact.id %}"><i class="fa fa-times"></i>Delete</a>
                                 </td>
                             </tr>
-                            {% endfor %}
-                            
+                        {% endfor %}
+                        <!--When there is no contacts created yet.-->
+                        {% else %}
+                            <tr>
+                                <td colspan="3"> No contacts created yet. </td>
+                                <td style="">
+                                      <a class="btn btn-info btn-sm" href="{% url 'contact_create' %}">Add Contact</a>
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
