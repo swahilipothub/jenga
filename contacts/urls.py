@@ -13,6 +13,7 @@ urlpatterns = [
 
 urlpatterns += [
 	url(r'^import_sheet/$', views.import_sheet, name="import_sheet"),
+    url(r'^search/$', views.search, name='search'),
 ]
 
 urlpatterns += [

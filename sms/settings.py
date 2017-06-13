@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.postgres',
     # Disable Django's own staticfiles handling in favour of WhiteNoise, for
     # greater consistency between gunicorn and `./manage.py runserver`. See:
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
@@ -33,6 +34,8 @@ INSTALLED_APPS = [
     'contacts',
     'sph_messages',
     'sph_accounts',
+
+
 ]
 
 MIDDLEWARE = [
@@ -149,7 +152,11 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'sms_create'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = secrets.HOST_USER
+EMAIL_HOST_PASSWORD = secrets.HOST_PASSWORD
+EMAIL_USE_TLS = True
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")

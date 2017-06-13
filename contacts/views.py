@@ -6,6 +6,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm, UploadFileForm
 
+from django.contrib.postgres.search import SearchVector
+
 from django.http import HttpResponseBadRequest, HttpResponse
 # from _compact import JsonResponse
 # import django_excel as excel
@@ -174,7 +176,16 @@ def export_contact_csv(request):
     response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
     writer = csv.writer(response)
     writer.writerow(['First name', 'Last name', 'Email address', 'Mobile Number', 'Group' ])
-    contacts = Contact.objects.filter(user=request.user).values_list('first_name', 'last_name', 'email', 'mobile', 'category_id')
+    contacts = Contact.objects.filter(user=request.user).values_list(
+        'first_name', 'last_name', 'email', 'mobile', 'category_id')
     for contact in contacts:
         writer.writerow(contact)
     return response
+
+
+@login_required
+def search(request):
+    item = request.GET['q']
+    search =  Contact.objects.annotate(search=SearchVector(
+        'first_name', 'last_name', 'mobile', 'email')).filter(search=item)
+    return render(request, 'contacts/contact_search.html', {'object':search})
