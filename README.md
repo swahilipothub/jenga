@@ -29,8 +29,10 @@ APIKEY   = "your api key"
 * Add email backend
 * Change to PEP8 format - Brighton
 * Add search functionality
+* Admin dashboard - for charts, graphs
+*   
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Repo owner/admin @athmanziri, @bmwasaru
+* Team contacts @ckchivatsi
