@@ -1,0 +1,12 @@
+{% extends "../base.html" %}
+{% load staticfiles %}
+
+{% block page_title %} Contact Upload {% endblock %}
+
+{% block body %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}

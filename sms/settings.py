@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'import_export',
+
     'contacts',
     'sph_messages',
     'sph_accounts',
@@ -159,3 +161,5 @@ EMAIL_USE_TLS = True
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

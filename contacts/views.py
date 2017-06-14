@@ -5,12 +5,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm, UploadFileForm
+from .resources import ContactResource
 
 from django.contrib.postgres.search import SearchVector
 
 from django.http import HttpResponseBadRequest, HttpResponse
 # from _compact import JsonResponse
 # import django_excel as excel
+
+from tablib import Dataset
 
 # Contact list.
 @login_required(login_url='/login/')
@@ -36,10 +39,15 @@ def contact_create(request):
 
             contact_create = form.save(commit=False)
             contact_create.user = request.user
-            contact_create.save()
 
-            form = ContactForm(request.user)
-            messages.success(request, "Contact Successfully Created")
+            if Contact.objects.filter(
+                user = request.user).exists() and Contact.objects.filter(
+                mobile = form.cleaned_data['mobile']).exists():
+                messages.error(request, "Contact with that phone number Already Exists")
+            else:
+                contact_create.save()
+                form = ContactForm(request.user)
+                messages.success(request, "Contact Successfully Created")
     else:
         form = ContactForm(request.user)
     return render(request, 'contacts/contact_create.html', {'form': form})
@@ -114,10 +122,15 @@ def group_create(request):
 
             group = form.save(commit=False)
             group.user = request.user
-            group.save()
 
-            form = Contact_GroupForm()
-            messages.success(request, "Group Successfully Created")
+            if Contact_Group.objects.filter(
+                user = request.user).exists() and Contact.objects.filter(
+                name = form.cleaned_data['name']).exists():
+                messages.error(request, "Contact with that phone number Already Exists")
+            else:
+                group.save()
+                form = Contact_GroupForm()
+                messages.success(request, "Group Successfully Created")
     else:
         form = Contact_GroupForm()
     return render(request, 'contacts/group_create.html', {'form': form})
@@ -181,6 +194,22 @@ def export_contact_csv(request):
     for contact in contacts:
         writer.writerow(contact)
     return response
+
+
+@login_required
+def contact_upload(request):
+    if request.method == 'POST':
+        person_resource = ContactResource()
+        dataset = Dataset()
+        new_persons = request.FILES['myfile']
+
+        imported_data = dataset.load(new_persons.read())
+        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
+
+        if not result.has_errors():
+            person_resource.import_data(dataset, dry_run=False)  # Actually import now
+
+    return render(request, 'contacts/contact_upload.html')
 
 
 @login_required
