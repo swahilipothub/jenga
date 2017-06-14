@@ -30,7 +30,12 @@ APIKEY   = "your api key"
 * Change to PEP8 format - Brighton
 * Add search functionality
 * Admin dashboard - for charts, graphs
-* import contacts from csv, excel   
+* import contacts from csv, excel
+
+### Issues ###
+
+* Caching
+* Rename apps a.k.a remove sph_ from the app names
 
 ### Who do I talk to? ###
 
