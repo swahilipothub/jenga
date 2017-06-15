@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     'import_export',
 
     'contacts',
-    'sph_messages',
-    'sph_accounts',
+    'msgs',
+    'accounts',
 
 
 ]
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'sms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sph_messages',
+        'NAME': 'jenga',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',

@@ -19,7 +19,7 @@ class Sms(models.Model):
 	created = models.DateTimeField(auto_now_add=True)	
 
 	class Meta:
-		db_table = 'sph_messages'
+		db_table = 'messages'
 
 	def __str__(self):
 		return "%s" % self.message
@@ -40,14 +40,4 @@ class Sms(models.Model):
 	def get_delete_url(self):
 		return ('message_delete', None, {
 	        'pk': self.pk,
-	    })
-
-
-# class SmsSettings(models.Model):
-# 	user 	  = models.ForeignKey(User, on_delete=models.CASCADE)
-# 	user_name = models.CharField(max_length=255)
-# 	api_key   = models.CharField(max_length=256)
-# 	created   = models.DateTimeField(auto_now_add=True)
-
-# 	class Meta:
-# 		db_table = 'sph_settings'	
+	    })	

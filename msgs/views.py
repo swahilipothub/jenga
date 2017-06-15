@@ -19,7 +19,7 @@ sender = "Jenga"
 @login_required
 def sms_list(request):
     sms_list = Sms.objects.filter(user=request.user)
-    return render(request, 'sph_messages/sms_list.html', {'sms_list': sms_list})
+    return render(request, 'msgs/sms_list.html', {'sms_list': sms_list})
 
 
 @login_required
@@ -32,17 +32,23 @@ def sms_create(request):
 
         if form.is_valid():
             category = form.cleaned_data['category']
-            message  = form.cleaned_data['message']
+            message = form.cleaned_data['message']
 
             category_name = Contact_Group.objects.get(name=category)
-            category_id   = category_name.id
-            recipients    = Contact.objects.values_list('mobile', flat=True).filter(category=category_id)
-            to            = ",".join(recipients)
-            results       = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+            category_id = category_name.id
+            recipients = Contact.objects.values_list(
+                'mobile', 
+                flat=True).filter(
+                category=category_id)
+            to  = ",".join(recipients)
+            results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
 
             sms_create = form.save(commit=False)
             sms_create.user = request.user
-            group_contacts = Contact.objects.values_list('first_name', flat=True).filter(category=category_id)
+            group_contacts = Contact.objects.values_list(
+                'first_name', 
+                flat=True).filter(
+                category=category_id)
             sms_create.recipient_list = ",".join(group_contacts)
             sms_create.recipient_count = group_contacts.count()
 
@@ -51,11 +57,11 @@ def sms_create(request):
             messages.success(request, "Message Successfully Sent")
     else:
         form = SmsForm(request.user)
-    return render(request, 'sph_messages/sms_create.html', {'form': form})
+    return render(request, 'msgs/sms_create.html', {'form': form})
 
 
 @login_required
-def sms_fetch(request, template_name='sph_messages/fetch_messages.html'):
+def sms_fetch(request, template_name='msgs/fetch_messages.html'):
     lastReceivedId = 0;    
     while True:
         messages = gateway.fetchMessages(lastReceivedId)
@@ -75,6 +81,6 @@ def user_balance(request):
     try:
         user = gateway.getUserData()
         balance = user['balance']
-        return render(request, 'sph_messages/balance.html', {'object': balance})
+        return render(request, 'msgs/balance.html', {'object': balance})
     except AfricasTalkingGatewayException as e:
         print ('Error: %s') % str(e)

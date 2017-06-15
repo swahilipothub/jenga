@@ -13,7 +13,7 @@ class Contact_Group(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'sph_groups'
+        db_table = 'groups'
         ordering = ('name',)
         verbose_name = _('group')
         verbose_name_plural = _('groups')
@@ -52,7 +52,7 @@ class Contact(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'sph_contacts'
+        db_table = 'contacts'
         ordering = ('last_name', 'first_name')
         verbose_name = _('contact')
         verbose_name_plural = _('contacts')

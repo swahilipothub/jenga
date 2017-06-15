@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 
 from . import views 
-from sph_accounts import views as core_views
+from accounts import views as core_views
 
 
 urlpatterns = [
@@ -24,5 +24,5 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^', include('sph_messages.urls')),
+    url(r'^', include('msgs.urls')),
 ]
