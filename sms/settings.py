@@ -11,11 +11,10 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY', "eamv%#qp6yyu7z^-$e*pvepht3n(k&3@fl-n6!6j2hr$0#ftn5")
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG')
 
 # Application definition
 
@@ -159,3 +158,10 @@ EMAIL_USE_TLS = True
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+
+AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME')
+AFRICASTALKING_APIKEY = os.environ.get('AFRICASTALKING_APIKEY')
+
+# Email Backend settings
+HOST_USER = os.environ.get('HOST_USER')
+HOST_PASSWORD = os.environ.get('HOST_PASSWORD')
