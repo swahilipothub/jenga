@@ -1,0 +1,24 @@
+from sms.settings import *
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'database_name',
+        'USER': 'database_user',
+        'PASSWORD': 'db_user_password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+DEBUG = True
+
+SECRET_KEY = "random_long_string"
+
+# obtain this from africastalking's website
+AFRICASTALKING_USERNAME = ""
+AFRICASTALKING_APIKEY = ""
+
+# Email Backend settings
+HOST_USER = 'email_host_here'
+HOST_PASSWORD = 'email_host_password_here'

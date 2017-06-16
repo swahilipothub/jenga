@@ -122,7 +122,7 @@ def group_create(request):
             group.user = request.user
 
             if Contact_Group.objects.filter(
-                user = request.user).exists() and Contact.objects.filter(
+                user = request.user).exists() and Contact_Group.objects.filter(
                 name = form.cleaned_data['name']).exists():
                 messages.error(request, "Contact with that phone number Already Exists")
             else:

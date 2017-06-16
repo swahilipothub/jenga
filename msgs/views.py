@@ -1,17 +1,14 @@
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
-from sms import secrets
 from contacts.models import Contact, Contact_Group
-
 from .AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
 from .forms import SmsForm
 from .models import Sms
 
-
-username = secrets.USERNAME
-apikey   = secrets.APIKEY
+username = settings.AFRICASTALKING_USERNAME
+apikey   = settings.AFRICASTALKING_APIKEY
 gateway  = AfricasTalkingGateway(username, apikey)
 sender = "Jenga"
 
@@ -42,7 +39,7 @@ def sms_create(request):
                 category=category_id)
             to  = ",".join(recipients)
             results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
-
+            
             sms_create = form.save(commit=False)
             sms_create.user = request.user
             group_contacts = Contact.objects.values_list(
