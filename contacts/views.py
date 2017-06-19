@@ -1,18 +1,14 @@
 import csv
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
 
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm, UploadFileForm
 from .resources import ContactResource
-
-from django.contrib.postgres.search import SearchVector
-
-from django.http import HttpResponseBadRequest, HttpResponse
-# from _compact import JsonResponse
-# import django_excel as excel
 
 from tablib import Dataset
 
@@ -38,7 +34,6 @@ def contact_create(request):
         if form.is_valid():
             contact_create = form.save(commit=False)
             contact_create.user = request.user
-
             if Contact.objects.filter(
                 user = request.user).exists() and Contact.objects.filter(
                 mobile = form.cleaned_data['mobile']).exists():
@@ -55,8 +50,6 @@ def contact_create(request):
 """Detail of a person.
    :param template: Add a custom template.
 """
-
-
 @login_required(login_url='/login/')
 def contact_detail(request, pk, template='contacts/contact_detail.html'):
     try:
@@ -67,7 +60,6 @@ def contact_detail(request, pk, template='contacts/contact_detail.html'):
     kwvars = {
         'object': contact_detail,
     }
-
     return render_to_response(request, template, kwvars)
 
 
@@ -80,7 +72,6 @@ def contact_update(request, pk):
             contact_update = form.save(commit=False)
             contact_update.user = request.user
             contact_update.save()
-
             messages.success(request, "Contact Successfully Updated")
     else:
         form = ContactForm(request.user, instance=contact)
@@ -120,7 +111,6 @@ def group_create(request):
         if form.is_valid():
             group = form.save(commit=False)
             group.user = request.user
-
             if Contact_Group.objects.filter(
                 user = request.user).exists() and Contact_Group.objects.filter(
                 name = form.cleaned_data['name']).exists():
@@ -143,7 +133,6 @@ def group_update(request, pk):
             group_update = form.save(commit=False)
             group_update.user = request.user
             group_update.save()
-
             messages.success(request, "Group Successfully Updated")
     else:
         form = Contact_GroupForm(instance=group)
@@ -190,7 +179,7 @@ def export_contact_csv(request):
     response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
     writer = csv.writer(response)
     writer.writerow(
-        ['First name', 'Last name', 'Email address', 'Mobile Number', 'Group'])
+        ['first_name', 'last_name', 'email', 'mobile', 'category'])
     contacts = Contact.objects.filter(user=request.user).values_list(
         'first_name', 'last_name', 'email', 'mobile', 'category_id')
     for contact in contacts:
@@ -201,16 +190,13 @@ def export_contact_csv(request):
 @login_required
 def contact_upload(request):
     if request.method == 'POST':
-        person_resource = ContactResource()
+        contact_resource = ContactResource()
         dataset = Dataset()
-        new_persons = request.FILES['myfile']
-
-        imported_data = dataset.load(new_persons.read())
-        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
-
+        new_contact = request.FILES['myfile']
+        imported_data = dataset.load(new_contact.read())
+        result = contact_resource.import_data(dataset, dry_run=True)  # Test the data import
         if not result.has_errors():
-            person_resource.import_data(dataset, dry_run=False)  # Actually import now
-
+            contact_resource.import_data(dataset, dry_run=False)  # Actually import now
     return render(request, 'contacts/contact_upload.html')
 
 
