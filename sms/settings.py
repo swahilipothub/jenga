@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'import_export',
+    'sms.local_settings',
 
     'contacts',
     'msgs',
