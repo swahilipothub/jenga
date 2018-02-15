@@ -5,9 +5,12 @@ from django.contrib.postgres.search import SearchVector
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
+from django.core.urlresolvers import reverse
+from django.db import IntegrityError, transaction
+from django.forms.formsets import formset_factory
 
 from .models import Contact, Contact_Group
-from .forms import ContactForm, Contact_GroupForm, UploadFileForm
+from .forms import ContactForm, BaseContactFormSet, Contact_GroupForm, UploadFileForm
 from .resources import ContactResource
 
 from tablib import Dataset
@@ -29,22 +32,42 @@ def contact_count(request):
 
 @login_required(login_url='/login/')
 def contact_create(request):
+    user = request.user
+
+    # Create the formset, specifying the form and formset we want to use.
+    ContactFormSet = formset_factory(ContactForm, formset=BaseContactFormSet)
+
     if request.method == 'POST':
-        form = ContactForm(request.user, request.POST)
-        if form.is_valid():
-            contact_create = form.save(commit=False)
-            contact_create.user = request.user
-            if Contact.objects.filter(
-                user = request.user).exists() and Contact.objects.filter(
-                mobile = form.cleaned_data['mobile']).exists():
-                messages.error(request, "Contact with that phone number Already Exists")
-            else:
-                contact_create.save()
-                form = ContactForm(request.user)
-                messages.success(request, "Contact Successfully Created")
+        contact_formset = ContactFormSet(request.POST)
+        if contact_formset.is_valid():
+            # Now save the data for each form in the formset
+            new_contacts = []
+
+            for form in contact_formset:
+                full_name = form.cleaned_data.get('full_name')
+                mobile = form.cleaned_data.get('mobile')
+                category = form.cleaned_data.get('category')
+
+                if full_name and mobile and category:
+                    new_contacts.append(Contact(user=user, 
+                        full_name=full_name, mobile=mobile, category=category))
+
+            try:
+                with transaction.atomic():
+                    #Replace the old with the new
+                    Contact.objects.filter(user=user).delete()
+                    Contact.objects.bulk_create(new_contacts)
+
+                    # And notify our users that it worked
+                    messages.success(request, 'You have created contacts')
+
+            except IntegrityError: #If the transaction failed
+                messages.error(request, 'There was an error saving your contacts.')
+                return redirect(reverse('contact_create'))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     else:
-        form = ContactForm(request.user)
-    return render(request, 'contacts/contact_create.html', {'form': form})
+        contact_formset = ContactFormSet(request.user)
+    return render(request, 'contacts/contact_create.html', {'contact_formset': contact_formset})
+
 
 
 """Detail of a person.

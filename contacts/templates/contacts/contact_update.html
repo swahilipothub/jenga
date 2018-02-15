@@ -10,28 +10,10 @@
             {% csrf_token %}
             <div class="form-group">
                 <label>First Name</label>
-                {{ form.first_name }}
-                {% if form.first_name.errors %}
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
                   <span class="help-block" style="color: red">
-                    {% for error in form.first_name.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label>Last Name</label>
-                {{ form.last_name }}
-                {% if form.last_name.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.last_name.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.email.errors %}{{ error }}{% endfor %}
+                    {% for error in form.full_name.errors %}{{ error }}{% endfor %}
                   </span>
                 {% endif %}
             </div>

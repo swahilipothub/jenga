@@ -11,7 +11,6 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     institution = models.CharField(max_length=255)
     created = models.DateField(auto_now_add=True)
-    public_email = models.EmailField(null=True, blank=True)
     email_confirmed = models.BooleanField(default=False)
 
 

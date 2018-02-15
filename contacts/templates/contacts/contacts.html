@@ -11,7 +11,6 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Email</th>
                                 <th>Mobile Number</th>
                                 <th>Category</th>
                             </tr>
@@ -20,8 +19,7 @@
                         {% if contacts %}
                         {% for contact in contacts %}
                             <tr>
-                                <td> {{ contact.first_name }} {{ contact.last_name}}</td>
-                                <td> {{ contact.email }} </td>
+                                <td> {{ contact.full_name }}</td>
                                 <td> {{ contact.mobile }}</td>
                                 <td> {{ contact.category }}</td>
                                 
