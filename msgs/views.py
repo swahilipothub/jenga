@@ -33,25 +33,24 @@ def sms_create(request):
 
             category_name = Contact_Group.objects.get(name=category)
             category_id = category_name.id
-            recipients = Contact.objects.values_list(
-                'mobile', 
-                flat=True).filter(
-                category=category_id)
+            recipients = Contact.objects.values_list('mobile', 
+                                                    flat=True).filter(
+                                                    category=category_id)
             to  = ",".join(recipients)
-            results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
-            
-            sms_create = form.save(commit=False)
-            sms_create.user = request.user
-            group_contacts = Contact.objects.values_list(
-                'first_name', 
-                flat=True).filter(
-                category=category_id)
-            sms_create.recipient_list = ",".join(group_contacts)
-            sms_create.recipient_count = group_contacts.count()
 
-            sms_create.save()
-            form = SmsForm(request.user)
-            messages.success(request, "Message Successfully Sent")
+            try:
+                results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+                for recipient in results:
+                    sms = form.save(commit=False)
+                    sms.user = request.user
+                    sms.number = recipient['number']
+                    sms.messageId = recipient['messageId']
+                    sms.status = recipient['status']
+                    sms.cost = recipient['cost']
+                    sms.save()
+                messages.success(request, "Message Successfully Sent")
+            except AfricasTalkingGatewayException as e:
+                messages.warning('Encountered an error while sending: %s' % str(e))
     else:
         form = SmsForm(request.user)
     return render(request, 'msgs/sms_create.html', {'form': form})

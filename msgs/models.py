@@ -13,9 +13,13 @@ from contacts.models import Contact_Group
 class Sms(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	category = models.ForeignKey(Contact_Group)
-	recipient_list = models.CharField(max_length=13000, null=True, blank=True, editable=False)
-	recipient_count = models.CharField(max_length=10, null=True, blank=True, editable=False)
+	# recipient_list = models.CharField(max_length=13000, null=True, blank=True, editable=False)
+	# recipient_count = models.CharField(max_length=10, null=True, blank=True, editable=False)
 	message = models.TextField()
+	number = models.CharField(max_length=13, null=True, blank=True,)
+	status = models.CharField(max_length=50, null=True, blank=True,)
+	messageId = models.CharField(max_length=10, null=True, blank=True,)
+	cost = models.CharField(max_length=6, null=True, blank=True,)
 	created = models.DateTimeField(auto_now_add=True)	
 
 	class Meta:

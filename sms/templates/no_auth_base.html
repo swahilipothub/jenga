@@ -18,15 +18,12 @@
     <!--  Light Bootstrap Table core CSS    -->
     <link href=" {% static 'css/light-bootstrap-dashboard.css' %}" rel="stylesheet"/>
 
-
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href=" {% static 'css/demo.css' %} " rel="stylesheet" />
-
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <!-- <link href=" {% static 'css/pe-icon-7-stroke.css' %} " rel="stylesheet" /> -->
 
     <style>
       .center{
@@ -41,27 +38,20 @@
 
 </head>
 <body>
-
-<div class="content center">
-    <div class="container-fluid">
-        <div class="row">
-
-            <div class="col-md-12">
-                <div class="card">
-                    
-                    <div class="content">
+    <div class="wrapper wrapper-full-page">
+        <div class="full-page  section-image" data-color="black" data-image="{% static 'img/swahilipot.jpg' %}">
+            <div class="content" style="vertical-align: middle;">
+                <div class="container">
+                    <div class="col-md-4 col-sm-6 ml-auto mr-auto">
                         {% include 'messages.html' %}
                         {% block body %}
 
                         {% endblock %}
                     </div>
-
                 </div>
-            </div>                    
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 
     <!--   Core JS Files   -->

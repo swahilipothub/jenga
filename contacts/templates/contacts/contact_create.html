@@ -6,43 +6,34 @@
 {% block body %}
 <div class="content">
 
-        <form role="form" action="" method="post">
-        	{% csrf_token %}
-            {{ contact_formset.management_form }}
-            {% for form in contact_formset %}
-            <div class="form-group">
-                <label>Full Name</label>
-                {{ form.full_name }}
-                {% if form.full_name.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.full_name.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label>Mobile Number</label> <small>(Start with 254...)</small>
-                {{ form.mobile }}
-                {% if form.mobile.errors %}
-                  <span class="help-block" style="color: red">
-                    {% for error in form.mobile.errors %}{{ error }}{% endfor %}
-                  </span>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label>Select Category</label><br>
-                {{ form.category }}
-            </div>
-            {% endfor %}
-
-            {% if contact_formset.non_form_errors %}
-                {% for error in contact_formset.non_form_errors %}
-                    {{ error|escape }}
-                {% endfor %}
+    <form role="form" action="" method="post">
+    	{% csrf_token %}
+        <div class="form-group">
+            <label>Full Name</label>
+            {{ form.full_name }}
+            {% if form.full_name.errors %}
+              <span class="help-block" style="color: red">
+                {% for error in form.full_name.errors %}{{ error }}{% endfor %}
+              </span>
             {% endif %}
-            
-            <input class="btn btn-success btn-round" type="submit" value="Add Contact" />
+        </div>
+        <div class="form-group">
+            <label>Mobile Number</label> <small>(Start with 254...)</small>
+            {{ form.mobile }}
+            {% if form.mobile.errors %}
+              <span class="help-block" style="color: red">
+                {% for error in form.mobile.errors %}{{ error }}{% endfor %}
+              </span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label>Select Category</label><br>
+            {{ form.category }}
+        </div>
+        
+        <input class="btn btn-success btn-round" type="submit" value="Add Contact" />
 
-        </form>
+    </form>
     
 </div>               
 {% endblock %}

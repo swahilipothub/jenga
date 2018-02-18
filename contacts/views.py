@@ -7,10 +7,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError, transaction
-from django.forms.formsets import formset_factory
 
 from .models import Contact, Contact_Group
-from .forms import ContactForm, BaseContactFormSet, Contact_GroupForm, UploadFileForm
+from .forms import ContactForm, Contact_GroupForm, UploadFileForm
 from .resources import ContactResource
 
 from tablib import Dataset
@@ -30,49 +29,26 @@ def contact_count(request):
                   {'contact_count': contact_count})
 
 
-@login_required(login_url='/login/')
+@login_required
 def contact_create(request):
-    user = request.user
-
-    # Create the formset, specifying the form and formset we want to use.
-    ContactFormSet = formset_factory(ContactForm, formset=BaseContactFormSet)
 
     if request.method == 'POST':
-        contact_formset = ContactFormSet(request.POST)
-        if contact_formset.is_valid():
-            # Now save the data for each form in the formset
-            new_contacts = []
-
-            for form in contact_formset:
-                full_name = form.cleaned_data.get('full_name')
-                mobile = form.cleaned_data.get('mobile')
-                category = form.cleaned_data.get('category')
-
-                if full_name and mobile and category:
-                    new_contacts.append(Contact(user=user, 
-                        full_name=full_name, mobile=mobile, category=category))
-
-            try:
-                with transaction.atomic():
-                    #Replace the old with the new
-                    Contact.objects.filter(user=user).delete()
-                    Contact.objects.bulk_create(new_contacts)
-
-                    # And notify our users that it worked
-                    messages.success(request, 'You have created contacts')
-
-            except IntegrityError: #If the transaction failed
-                messages.error(request, 'There was an error saving your contacts.')
-                return redirect(reverse('contact_create'))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        form = ContactForm(request.user, request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.user = request.user
+            if Contact.objects.filter(user=request.user, 
+                mobile=form.cleaned_data['mobile']).exists():
+                messages.error(request, "Contact with that phone number Already Exists")
+            else:
+                contact.save()
+                messages.success(request, "Contact Successfully Created")
+                return redirect('contact_create')
     else:
-        contact_formset = ContactFormSet(request.user)
-    return render(request, 'contacts/contact_create.html', {'contact_formset': contact_formset})
+        form = ContactForm(request.user)
+    return render(request, "contacts/contact_create.html", {"form": form})
 
 
-
-"""Detail of a person.
-   :param template: Add a custom template.
-"""
 @login_required(login_url='/login/')
 def contact_detail(request, pk, template='contacts/contact_detail.html'):
     try:
@@ -135,8 +111,7 @@ def group_create(request):
             group = form.save(commit=False)
             group.user = request.user
             if Contact_Group.objects.filter(
-                user = request.user).exists() and Contact_Group.objects.filter(
-                name = form.cleaned_data['name']).exists():
+                user=request.user, name=form.cleaned_data['name']).exists():
                 messages.error(request, "Contact with that phone number Already Exists")
             else:
                 group.save()

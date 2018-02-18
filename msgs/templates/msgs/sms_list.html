@@ -9,8 +9,11 @@
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th>Category</th>
+                        <th>Group</th>
+                        <th>Number</th>
                         <th>Message</th>
+                        <th>Status</th>
+                        <th>Cost</th>
                         <th>Date</th>
                     </tr>
                 </thead>
@@ -18,8 +21,11 @@
                 {% if sms_list %}
                 {% for sms in sms_list %}
                     <tr>
-                        <td> {{ sms.category }} <br> <small style="color: green">{{ sms.recipient_count }} recipients</small> </td>
+                        <td> {{ sms.category }} <br>
+                        <td> {{ sms.number }} <br>
                         <td> {{ sms.message}} </td>
+                        <td> {{ sms.status }} <br>
+                        <td> {{ sms.cost }} <br>
                         <td> {{ sms.created }} </td>
                     </tr>
                 {% endfor %}
