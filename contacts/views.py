@@ -191,12 +191,14 @@ def contact_upload(request):
         contact_resource = ContactResource()
         dataset = Dataset()
         new_contact = request.FILES['myfile']
+
         imported_data = dataset.load(new_contact.read())
         result = contact_resource.import_data(dataset, dry_run=True)  # Test the data import
+
         if not result.has_errors():
             contact_resource.import_data(dataset, dry_run=False)  # Actually import now
-    return render(request, 'contacts/contact_upload.html')
 
+    return render(request, 'contacts/contact_upload.html')
 
 @login_required
 def search(request):

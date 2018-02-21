@@ -1,3 +1,4 @@
+import random
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -15,7 +16,7 @@ sender = "Jenga"
 
 @login_required
 def sms_list(request):
-    sms_list = Sms.objects.filter(user=request.user)
+    sms_list = Sms.objects.filter(user=request.user).order_by('-created')
     return render(request, 'msgs/sms_list.html', {'sms_list': sms_list})
 
 
@@ -41,14 +42,17 @@ def sms_create(request):
             try:
                 results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
                 for recipient in results:
-                    sms = form.save(commit=False)
-                    sms.user = request.user
-                    sms.number = recipient['number']
-                    sms.messageId = recipient['messageId']
-                    sms.status = recipient['status']
-                    sms.cost = recipient['cost']
-                    sms.save()
-                messages.success(request, "Message Successfully Sent")
+                    user = request.user
+                    message = message
+                    category = category
+                    number = recipient['number']
+                    messageId = recipient['messageId']
+                    status = recipient['status']
+                    cost = recipient['cost']
+                    Sms.objects.create(user=user, 
+                        message=message, category=category, number=number, 
+                        messageId=messageId, status=status, cost=cost)
+                messages.success(request, "Message Successfully delivered to AfricasTalking")
             except AfricasTalkingGatewayException as e:
                 messages.warning('Encountered an error while sending: %s' % str(e))
     else:

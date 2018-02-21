@@ -4,67 +4,74 @@
 {% block body %}
     <div class="content">
         <form role="form" method="post" action="">
-         {% csrf_token %}
+            <div class="card" style="padding: 30px; margin-top: 50px;">
+                <div class="card-header ">
+                    <h2 class="header">Signup</h2>
+                </div>
+                <div class="card-body ">
+                    <div class="card-body">
+                     {% csrf_token %}
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Username</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                          <span class="help-block" style="color: red">
-                            {% for error in form.username.errors %}{{ error }}{% endfor %}
-                          </span>
-                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}
+                                      <span class="help-block" style="color: red">
+                                        {% for error in form.username.errors %}{{ error }}{% endfor %}
+                                      </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                      <span class="help-block" style="color: red">
+                                        {% for error in form.email.errors %}{{ error }}{% endfor %}
+                                      </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.errors %}
+                                      <span class="help-block" style="color: red">
+                                        {% for error in form.password1.errors %}{{ error }}{% endfor %}
+                                      </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.errors %}
+                                      <span class="help-block" style="color: red">
+                                        {% for error in form.password2.errors %}{{ error }}{% endfor %}
+                                      </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="btn btn-default" value="Create Account" />
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Email</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                          <span class="help-block" style="color: red">
-                            {% for error in form.email.errors %}{{ error }}{% endfor %}
-                          </span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Password</label>
-                        {{ form.password1 }}
-                        {% if form.password1.errors %}
-                          <span class="help-block" style="color: red">
-                            {% for error in form.password1.errors %}{{ error }}{% endfor %}
-                          </span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Confirm Password</label>
-                        {{ form.password2 }}
-                        {% if form.password2.errors %}
-                          <span class="help-block" style="color: red">
-                            {% for error in form.password2.errors %}{{ error }}{% endfor %}
-                          </span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <input type="submit" class="btn btn-default" value="Create Account" />
-
-            <div class="clearfix"></div>
         </form>
     </div>
 {% endblock %}

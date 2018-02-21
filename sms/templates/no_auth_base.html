@@ -40,15 +40,11 @@
 <body>
     <div class="wrapper wrapper-full-page">
         <div class="full-page  section-image" data-color="black" data-image="{% static 'img/swahilipot.jpg' %}">
-            <div class="content" style="vertical-align: middle;">
-                <div class="container">
-                    <div class="col-md-4 col-sm-6 ml-auto mr-auto">
-                        {% include 'messages.html' %}
-                        {% block body %}
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-6 ml-auto mr-auto">
+                {% include 'messages.html' %}
+                {% block body %}
 
-                        {% endblock %}
-                    </div>
-                </div>
+                {% endblock %}
             </div>
         </div>
     </div>
