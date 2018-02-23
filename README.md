@@ -7,6 +7,8 @@
 ### How do I get set up? ###
 
 * Download the project or clone from the repo
+* Set up python3 virtual environment using virtualenv `virtualenv venv -p python3`
+* Activate the virtualenv `. venv/bin/activate`
 * Do a `pip install -r requirements.txt` to install dependencies
 * You should have an africastalking account https://africastalking.com/.
   get your API key and username from your account
