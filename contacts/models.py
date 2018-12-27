@@ -1,12 +1,10 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import permalink
+from django.urls import reverse
 from django.utils.translation import ugettext as _
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Contact_Group(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -22,31 +20,21 @@ class Contact_Group(models.Model):
     def __str__(self):
         return "%s" % self.name
 
-    @permalink
     def get_absolute_url(self):
-        return ('group_detail', None, {
-            'pk': self.pk,
-        })
+        return reverse('group_detail', args=[self.pk])
 
-    @permalink
     def get_update_url(self):
-        return ('group_update', None, {
-            'pk': self.pk,
-        })
+        return reverse('group_update', args=[self.pk])
 
-    @permalink
     def get_delete_url(self):
-        return ('group_delete', None, {
-            'pk': self.pk,
-        })
+        return reverse('group_delete', args=[self.pk])
 
 
-@python_2_unicode_compatible
 class Contact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, null=True, blank=True)
     mobile = models.CharField(max_length=12, help_text='start with 254xxxxxxxx')
-    category = models.ForeignKey(Contact_Group, null=True, blank=True)
+    category = models.ForeignKey(Contact_Group, null=True, blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -59,20 +47,11 @@ class Contact(models.Model):
     def __str__(self):
         return self.full_name
 
-    @permalink
     def get_absolute_url(self):
-        return ('contacts_detail', None, {
-            'pk': self.pk,
-        })
+        return reverse('contacts_detail', args=[self.pk])
 
-    @permalink
     def get_update_url(self):
-        return ('contacts_update', None, {
-            'pk': self.pk,
-        })
+        return reverse('contacts_update', args=[self.pk])
 
-    @permalink
     def get_delete_url(self):
-        return ('contacts_delete', None, {
-            'pk': self.pk,
-        })
+        return reverse('contacts_delete', args=[self.pk])

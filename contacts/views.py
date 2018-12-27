@@ -5,8 +5,6 @@ from django.contrib.postgres.search import SearchVector
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
-from django.core.urlresolvers import reverse
-from django.db import IntegrityError, transaction
 
 from .models import Contact, Contact_Group
 from .forms import ContactForm, Contact_GroupForm, UploadFileForm

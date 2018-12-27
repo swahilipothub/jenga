@@ -9,9 +9,9 @@ from .forms import SmsForm
 from .models import Sms
 
 username = settings.AFRICASTALKING_USERNAME
-apikey   = settings.AFRICASTALKING_APIKEY
-gateway  = AfricasTalkingGateway(username, apikey)
-sender = "Jenga"
+apikey = settings.AFRICASTALKING_APIKEY
+gateway = AfricasTalkingGateway(username, apikey)
+sender = "Swahilipot"
 
 
 @login_required
@@ -25,7 +25,6 @@ def sms_create(request):
     if request.method == 'POST':
         form = SmsForm(request.user, request.POST)
         bulkSMSMode = 1
-        sender = None
         enqueue = 1
 
         if form.is_valid():
