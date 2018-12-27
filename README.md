@@ -21,7 +21,6 @@
 
 * Project documentation
 * Add email backend - Ziri
-* Change to PEP8 format - Brighton
 * Add search functionality
 * Admin dashboard - for charts, graphs
 * import contacts from csv, excel
@@ -29,7 +28,7 @@
 ### Issues ###
 
 * Caching
-* Rename apps a.k.a remove sph_ from the app names
+* Redirect to contact group creation when nono exists
 
 ### Who do I talk to? ###
 
