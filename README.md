@@ -7,9 +7,9 @@
 ### How do I get set up? ###
 
 * Download the project or clone from the repo
-* Set up python3 virtual environment using virtualenv `virtualenv venv -p python3`
-* Activate the virtualenv `. venv/bin/activate`
-* Do a `pip install -r requirements.txt` to install dependencies
+* Ensure you have `pipenv` installed
+* Do a `pipenv install` to install dependencies
+* Activate virtualenv `pipenv shell`
 * You should have an africastalking account https://africastalking.com/.
   get your API key and username from your account
 * copy the `sms/local_settings.example` to `sms/local_settings.py` and edit database settings according to your local database settings, africastalking api key & username and SECRET_KEY
