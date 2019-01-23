@@ -5,3 +5,4 @@ staticfiles
 db.sqlite3
 .idea
 sms/local_settings.py
+.vscode
