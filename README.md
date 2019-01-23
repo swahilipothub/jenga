@@ -34,6 +34,3 @@
 
 * Repo owner/admin @athmanziri, @bmwasaru
 * Team contacts @ckchivatsi
-
-### Site URL ###
-http://jenga-io.herokuapp.com/
