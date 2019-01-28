@@ -33,10 +33,10 @@ def sms_create(request):
 
             category_name = Contact_Group.objects.get(name=category)
             category_id = category_name.id
-            recipients = Contact.objects.values_list('mobile', 
-                                                    flat=True).filter(
-                                                    category=category_id)
-            to  = ",".join(recipients)
+            recipients = Contact.objects.values_list('mobile',
+                                                     flat=True).filter(
+                category=category_id)
+            to = ",".join(recipients)
 
             try:
                 results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
@@ -48,9 +48,9 @@ def sms_create(request):
                     messageId = recipient['messageId']
                     status = recipient['status']
                     cost = recipient['cost']
-                    Sms.objects.create(user=user, 
-                        message=message, category=category, number=number, 
-                        messageId=messageId, status=status, cost=cost)
+                    Sms.objects.create(user=user,
+                                       message=message, category=category, number=number,
+                                       messageId=messageId, status=status, cost=cost)
                 messages.success(request, "Message Successfully delivered to AfricasTalking")
             except AfricasTalkingGatewayException as e:
                 messages.warning('Encountered an error while sending: %s' % str(e))
@@ -61,18 +61,18 @@ def sms_create(request):
 
 @login_required
 def sms_fetch(request, template_name='msgs/fetch_messages.html'):
-    lastReceivedId = 0;    
+    last_received_id = 0
     while True:
-        messages = gateway.fetchMessages(lastReceivedId)
+        messages = gateway.fetchMessages(last_received_id)
         for message in messages:
             message_from = message['from']
             messate_to = message['to']
             message_date = message['date']
             message_text = message['text']
-            message_linkID = message['linkID']
-            lastReceivedId = message['id']
+            message_link_id = message['linkID']
+            last_received_id = message['id']
 
-            return render(request, template_name, {'object':message})
+            return render(request, template_name, {'object': message})
 
 
 @login_required
@@ -82,4 +82,4 @@ def user_balance(request):
         balance = user['balance']
         return render(request, 'msgs/balance.html', {'object': balance})
     except AfricasTalkingGatewayException as e:
-        print ('Error: %s') % str(e)
+        print('Error: %s') % str(e)

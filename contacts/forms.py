@@ -5,7 +5,7 @@ from django import forms
 from .models import Contact, Contact_Group
 
 
-class Contact_GroupForm(forms.ModelForm):
+class ContactGroupForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 

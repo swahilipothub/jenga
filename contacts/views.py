@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
 
 from .models import Contact, Contact_Group
-from .forms import ContactForm, Contact_GroupForm, UploadFileForm
+from .forms import ContactForm, ContactGroupForm, UploadFileForm
 from .resources import ContactResource
 
 from tablib import Dataset
@@ -29,14 +29,13 @@ def contact_count(request):
 
 @login_required
 def contact_create(request):
-
     if request.method == 'POST':
         form = ContactForm(request.user, request.POST)
         if form.is_valid():
             contact = form.save(commit=False)
             contact.user = request.user
-            if Contact.objects.filter(user=request.user, 
-                mobile=form.cleaned_data['mobile']).exists():
+            if Contact.objects.filter(user=request.user,
+                                      mobile=form.cleaned_data['mobile']).exists():
                 messages.error(request, "Contact with that phone number Already Exists")
             else:
                 contact.save()
@@ -104,19 +103,19 @@ def group_count(request):
 @login_required(login_url='/login/')
 def group_create(request):
     if request.method == 'POST':
-        form = Contact_GroupForm(request.POST)
+        form = ContactGroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
             group.user = request.user
             if Contact_Group.objects.filter(
-                user=request.user, name=form.cleaned_data['name']).exists():
+                    user=request.user, name=form.cleaned_data['name']).exists():
                 messages.error(request, "Contact with that phone number Already Exists")
             else:
                 group.save()
-                form = Contact_GroupForm()
+                form = ContactGroupForm()
                 messages.success(request, "Group Successfully Created")
     else:
-        form = Contact_GroupForm()
+        form = ContactGroupForm()
     return render(request, 'contacts/group_create.html', {'form': form})
 
 
@@ -124,14 +123,14 @@ def group_create(request):
 def group_update(request, pk):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
-        form = Contact_GroupForm(request.POST, instance=group)
+        form = ContactGroupForm(request.POST, instance=group)
         if form.is_valid():
             group_update = form.save(commit=False)
             group_update.user = request.user
             group_update.save()
             messages.success(request, "Group Successfully Updated")
     else:
-        form = Contact_GroupForm(instance=group)
+        form = ContactGroupForm(instance=group)
     return render(request, 'contacts/group_update.html', {'form': form})
 
 
@@ -197,6 +196,7 @@ def contact_upload(request):
             contact_resource.import_data(dataset, dry_run=False)  # Actually import now
 
     return render(request, 'contacts/contact_upload.html')
+
 
 @login_required
 def search(request):

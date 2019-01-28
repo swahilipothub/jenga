@@ -8,6 +8,7 @@ class SmsForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=None, 
                                       widget=forms.Select(attrs={'class':'form-control'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control'}))
+
     class Meta:
         model = Sms
         fields = ('category', 'message')
