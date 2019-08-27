@@ -33,7 +33,7 @@ class Contact_Group(models.Model):
 class Contact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, null=True, blank=True)
-    mobile = models.CharField(max_length=12, help_text='start with 254xxxxxxxx')
+    mobile = models.CharField(max_length=13, help_text='start with 254xxxxxxxx')
     category = models.ForeignKey(Contact_Group, null=True, blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 

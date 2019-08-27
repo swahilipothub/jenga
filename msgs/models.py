@@ -15,8 +15,8 @@ class Sms(models.Model):
 	number = models.CharField(max_length=13)
 	status = models.CharField(max_length=50)
 	messageId = models.CharField(max_length=256)
-	cost = models.CharField(max_length=6)
-	created = models.DateTimeField(auto_now_add=True)	
+	cost = models.CharField(max_length=100)
+	created = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		db_table = 'messages'
