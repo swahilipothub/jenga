@@ -14,13 +14,13 @@ from tablib import Dataset
 
 
 # Contact list.
-@login_required(login_url='/login/')
+@login_required
 def contact_list(request):
     contacts = Contact.objects.filter(user=request.user).order_by('-created')
     return render(request, 'contacts/contacts.html', {'contacts': contacts})
 
 
-@login_required(login_url='/login/')
+@login_required
 def contact_count(request):
     contact_count = Contact.objects.filter(user=request.user).count()
     return render(request, 'contacts/contact_count.html',
@@ -46,7 +46,7 @@ def contact_create(request):
     return render(request, "contacts/contact_create.html", {"form": form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def contact_detail(request, pk, template='contacts/contact_detail.html'):
     try:
         contact_detail = Contact.objects.get(pk__iexact=pk)
@@ -59,7 +59,7 @@ def contact_detail(request, pk, template='contacts/contact_detail.html'):
     return render_to_response(request, template, kwvars)
 
 
-@login_required(login_url='/login/')
+@login_required
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def contact_update(request, pk):
     return render(request, 'contacts/contact_update.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def contact_delete(request,
                    pk,
                    template_name='contacts/confirm_contact_delete.html'):
@@ -86,7 +86,7 @@ def contact_delete(request,
     return render(request, template_name, {'object': contact})
 
 
-@login_required(login_url='/login/')
+@login_required
 def group_list(request):
     groups = Contact_Group.objects.filter(
         user=request.user).order_by('-created')
@@ -100,7 +100,7 @@ def group_count(request):
                   {'group_count': group_count})
 
 
-@login_required(login_url='/login/')
+@login_required
 def group_create(request):
     if request.method == 'POST':
         form = ContactGroupForm(request.POST)
@@ -119,7 +119,7 @@ def group_create(request):
     return render(request, 'contacts/group_create.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def group_update(request, pk):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
@@ -134,7 +134,7 @@ def group_update(request, pk):
     return render(request, 'contacts/group_update.html', {'form': form})
 
 
-@login_required(login_url='/login/')
+@login_required
 def group_delete(request,
                  pk,
                  template_name='contacts/confirm_group_delete.html'):
@@ -146,7 +146,7 @@ def group_delete(request,
     return render(request, template_name, {'object': group})
 
 
-@login_required(login_url='/login/')
+@login_required
 def import_sheet(request):
     if request.method == "POST":
         form = UploadFileForm(request.user, request.POST, request.FILES)
