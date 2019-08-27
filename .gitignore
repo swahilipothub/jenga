@@ -4,5 +4,5 @@ staticfiles
 .env
 db.sqlite3
 .idea
-sms/local_settings.py
+jenga/local_settings.py
 .vscode
