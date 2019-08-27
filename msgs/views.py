@@ -1,4 +1,6 @@
 import random
+import logging
+
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -40,6 +42,7 @@ def sms_create(request):
 
             try:
                 results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+                print(username)
                 for recipient in results:
                     user = request.user
                     message = message
@@ -51,9 +54,10 @@ def sms_create(request):
                     Sms.objects.create(user=user,
                                        message=message, category=category, number=number,
                                        messageId=messageId, status=status, cost=cost)
-                messages.success(request, "Message Successfully delivered to AfricasTalking")
+                messages.success(request, "Message Successfully delivered.")
             except AfricasTalkingGatewayException as e:
-                messages.warning('Encountered an error while sending: %s' % str(e))
+                messages.warning(request, 'Encountered an error while sending message')
+                logging.ERROR('Encountered an error while sending: {}'.format(e))
     else:
         form = SmsForm(request.user)
     return render(request, 'msgs/sms_create.html', {'form': form})
