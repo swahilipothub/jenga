@@ -2,7 +2,7 @@ appdirs==1.4.0
 astroid==2.1.0
 diff-match-patch==20110725.1
 dj-database-url==0.5.0
-Django==2.2
+Django==2.2.4
 django-excel==0.0.6
 django-heroku==0.3.1
 django-import-export==1.1.0
