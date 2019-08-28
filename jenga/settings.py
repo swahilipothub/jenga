@@ -150,12 +150,12 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'sms_create'
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_HOST_USER = os.environ.get('HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('HOST_PASSWORD')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+# EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_HOST_USER = os.environ.get('HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('HOST_PASSWORD')
+# EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
