@@ -150,6 +150,7 @@ MESSAGE_TAGS = {
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'sms_create'
+LOGOUT_REDIRECT_URL = 'login'
 
 # EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 # EMAIL_HOST = os.environ.get('EMAIL_HOST')
