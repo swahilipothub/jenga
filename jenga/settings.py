@@ -1,5 +1,6 @@
 import os
 import dj_database_url
+import django_heroku
 from django.contrib.messages import constants as messages
 
 
@@ -114,7 +115,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
 DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
@@ -164,3 +165,6 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME')
 AFRICASTALKING_APIKEY = os.environ.get('AFRICASTALKING_APIKEY')
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
