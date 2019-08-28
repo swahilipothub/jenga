@@ -6,3 +6,8 @@ db.sqlite3
 .idea
 jenga/local_settings.py
 .vscode
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
