@@ -19,8 +19,9 @@ class ContactForm(forms.ModelForm):
         attrs={'class': 'form-control'}))
     mobile = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    category = forms.ModelChoiceField(
-        queryset=None, widget=forms.Select(attrs={'class': 'form-control'}))
+    category = forms.ModelMultipleChoiceField(
+        widget = forms.CheckboxSelectMultiple,
+        queryset = None)
 
     class Meta:
         model = Contact

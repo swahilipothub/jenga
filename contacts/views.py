@@ -135,9 +135,7 @@ def group_update(request, pk):
 
 
 @login_required
-def group_delete(request,
-                 pk,
-                 template_name='contacts/confirm_group_delete.html'):
+def group_delete(request, pk, template_name='contacts/confirm_group_delete.html'):
     group = get_object_or_404(Contact_Group, pk=pk)
     if request.method == 'POST':
         group.delete()
@@ -146,26 +144,26 @@ def group_delete(request,
     return render(request, template_name, {'object': group})
 
 
-@login_required
-def import_sheet(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.user, request.POST, request.FILES)
-        if form.is_valid():
-            import_sheet = request.FILES['file'].save_to_database(
-                model=Contact,
-                mapdict=[
-                    'first_name', 'last_name', 'mobile', 'id_number',
-                    'category'
-                ],
-                commit=False)
-            import_sheet.user = request.user
-            import_sheet.save_to_database()
-            return HttpResponse("OK")
-        else:
-            return HttpResponseBadRequest("Bad Request")
-    else:
-        form = UploadFileForm()
-    return render(request, 'contacts/upload_form.html', {'form': form})
+# @login_required
+# def import_sheet(request):
+#     if request.method == "POST":
+#         form = UploadFileForm(request.user, request.POST, request.FILES)
+#         if form.is_valid():
+#             import_sheet = request.FILES['file'].save_to_database(
+#                 model=Contact,
+#                 mapdict=[
+#                     'first_name', 'last_name', 'mobile', 'id_number',
+#                     'category'
+#                 ],
+#                 commit=False)
+#             import_sheet.user = request.user
+#             import_sheet.save_to_database()
+#             return HttpResponse("OK")
+#         else:
+#             return HttpResponseBadRequest("Bad Request")
+#     else:
+#         form = UploadFileForm()
+#     return render(request, 'contacts/upload_form.html', {'form': form})
 
 
 @login_required

@@ -32,31 +32,31 @@ def sms_create(request):
             category = form.cleaned_data['category']
             message = form.cleaned_data['message']
 
-            category_name = Contact_Group.objects.get(name=category)
-            category_id = category_name.id
-            recipients = Contact.objects.values_list('mobile',
-                                                     flat=True).filter(
-                category=category_id)
-            to = ",".join(recipients)
+            category_name = Contact_Group.objects.filter(id__in=category)
+            for item in category_name:
+                category_id = item.id
+                recipients = Contact.objects.values_list(
+                    'mobile', flat=True).filter(category=category_id).distinct().order_by()
+                to = ",".join(recipients)
 
-            try:
-                results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
-                print(username)
-                for recipient in results:
-                    user = request.user
-                    message = message
-                    category = category
-                    number = recipient['number']
-                    messageId = recipient['messageId']
-                    status = recipient['status']
-                    cost = recipient['cost']
-                    Sms.objects.create(user=user,
-                                       message=message, category=category, number=number,
-                                       messageId=messageId, status=status, cost=cost)
-                messages.success(request, "Message Successfully delivered.")
-            except AfricasTalkingGatewayException as e:
-                messages.warning(request, 'Encountered an error while sending message')
-                logging.ERROR('Encountered an error while sending: {}'.format(e))
+                try:
+                    results = gateway.sendMessage(to, message, sender, bulkSMSMode, enqueue)
+                    print(username)
+                    for recipient in results:
+                        user = request.user
+                        message = message
+                        number = recipient['number']
+                        messageId = recipient['messageId']
+                        status = recipient['status']
+                        cost = recipient['cost']
+                        instance = Sms.objects.create(user=user,
+                                        message=message, number=number,
+                                        messageId=messageId, status=status, cost=cost)
+                        instance.category.set(category_name)
+                except AfricasTalkingGatewayException as e:
+                    messages.warning(request, 'Encountered an error while sending message')
+                    logging.ERROR('Encountered an error while sending: {}'.format(e))
+            messages.success(request, "Message Successfully delivered.")
     else:
         form = SmsForm(request.user)
     return render(request, 'msgs/sms_create.html', {'form': form})

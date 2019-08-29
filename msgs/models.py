@@ -10,7 +10,7 @@ from contacts.models import Contact_Group
 
 class Sms(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	category = models.ForeignKey(Contact_Group, on_delete=models.CASCADE)
+	category = models.ManyToManyField(Contact_Group)
 	message = models.TextField()
 	number = models.CharField(max_length=13)
 	status = models.CharField(max_length=50)

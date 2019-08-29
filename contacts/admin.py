@@ -12,6 +12,6 @@ class ContactGroupAdmin(ImportExportModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(ImportExportModelAdmin):
-    list_display = ('full_name', 'mobile', 'category')
+    list_display = ('full_name', 'mobile',)
     search_fields = ('full_name', 'mobile',)
     # inlines = [ContactInstanceInline]

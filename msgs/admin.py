@@ -5,5 +5,5 @@ from msgs.models import Sms
 
 @admin.register(Sms)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('number', 'message', 'category', 'status', 'cost')
+    list_display = ('number', 'message', 'status', 'cost')
     search_fields = ('number', 'status')
