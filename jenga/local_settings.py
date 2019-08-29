@@ -4,8 +4,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'jenga',
-        'USER': 'jenga_user',
-        'PASSWORD': 'jurn3hkfkkd',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -17,7 +17,8 @@ SECRET_KEY = "K5VYabpdUqVAmSuVeQVQj/5EI1RDvfOJyvAR7qMkkbo="
 
 # obtain this from africastalking's website
 AFRICASTALKING_USERNAME = "swahilipothub"
-AFRICASTALKING_APIKEY = "649730e2d5cf9abade5872894c53ef9c8367a765ad505710c594599c9ed5a984"
+AFRICASTALKING_APIKEY = "bb4f496e9865eac6d632fa567a0fa90a96a1e013320a97f8874c1ba7950b665a"
+AFRICASTALKING_SENDER = "Swahilipot"
 
 # Email Backend settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

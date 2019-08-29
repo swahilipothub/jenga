@@ -174,9 +174,9 @@ def export_contact_csv(request):
     response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
     writer = csv.writer(response)
     writer.writerow(
-        ['first_name', 'last_name', 'email', 'mobile', 'category'])
+        ['full_name', 'mobile', 'category'])
     contacts = Contact.objects.filter(user=request.user).values_list(
-        'first_name', 'last_name', 'email', 'mobile', 'category_id')
+        'full_name', 'mobile', 'category_id')
     for contact in contacts:
         writer.writerow(contact)
     return response
