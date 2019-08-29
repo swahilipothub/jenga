@@ -1,1 +1,1 @@
-web: gunicorn sms.wsgi
+web: gunicorn jenga.wsgi

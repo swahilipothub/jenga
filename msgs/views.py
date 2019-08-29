@@ -10,11 +10,6 @@ from .AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayE
 from .forms import SmsForm
 from .models import Sms
 
-username = settings.AFRICASTALKING_USERNAME
-apikey = settings.AFRICASTALKING_APIKEY
-gateway = AfricasTalkingGateway(username, apikey)
-sender = "Swahilipot"
-
 
 @login_required
 def sms_list(request):
@@ -26,6 +21,10 @@ def sms_list(request):
 def sms_create(request):
     if request.method == 'POST':
         form = SmsForm(request.user, request.POST)
+        username = request.user.profile.africastalking_username
+        apikey = request.user.profile.africastalking_api_key
+        sender = request.user.profile.africastalking_sender_id
+        gateway = AfricasTalkingGateway(username, apikey)
         bulkSMSMode = 1
         enqueue = 1
 

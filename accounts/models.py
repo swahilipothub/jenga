@@ -12,6 +12,9 @@ class Profile(models.Model):
     institution = models.CharField(max_length=255)
     created = models.DateField(auto_now_add=True)
     email_confirmed = models.BooleanField(default=False)
+    africastalking_api_key = models.CharField(max_length=256, null=True, blank=True)
+    africastalking_username = models.CharField(max_length=128, null=True, blank=True)
+    africastalking_sender_id = models.CharField(max_length=128, null=True, blank=True)
 
 
 @receiver(post_save, sender=User)

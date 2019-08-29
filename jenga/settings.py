@@ -1,5 +1,6 @@
 import os
 import dj_database_url
+import django_heroku
 from django.contrib.messages import constants as messages
 
 
@@ -19,6 +20,9 @@ DEBUG = os.environ.get('DEBUG')
 # Application definition
 
 INSTALLED_APPS = [
+    # 'jet.dashboard',
+    # 'jet',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -114,7 +118,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
 DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
@@ -149,18 +153,19 @@ MESSAGE_TAGS = {
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'sms_create'
+LOGOUT_REDIRECT_URL = 'login'
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_HOST_USER = os.environ.get('HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('HOST_PASSWORD')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+# EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_HOST_USER = os.environ.get('HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('HOST_PASSWORD')
+# EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
-AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME')
-AFRICASTALKING_APIKEY = os.environ.get('AFRICASTALKING_APIKEY')
+# Activate Django-Heroku.
+django_heroku.settings(locals())

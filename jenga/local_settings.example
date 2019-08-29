@@ -15,9 +15,6 @@ DEBUG = True
 
 SECRET_KEY = "random_long_string"
 
-# obtain this from africastalking's website
-AFRICASTALKING_USERNAME = ""
-AFRICASTALKING_APIKEY = ""
 
 # Email Backend settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
