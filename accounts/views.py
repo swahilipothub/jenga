@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.mail import EmailMessage
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -10,8 +10,22 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib import messages
 
-from .forms import SignUpForm, ProfileForm
+from .forms import SignUpForm, ProfileForm, LoginForm
 from .tokens import account_activation_token
+
+
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    if request.POST:
+        if form.is_valid():
+            user = form.login(request)
+            if user:
+                messages.success(request, u'Your have successfully logged in!.')
+                login(request, user)
+                return redirect('sms_create')# Redirect to a success page.
+        else:
+            messages.error(request, u'Invalid Login!')
+    return render(request, 'login.html', {'form': form })
 
 
 def signup(request):

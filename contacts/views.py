@@ -5,10 +5,10 @@ from django.contrib.postgres.search import SearchVector
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render_to_response, Http404
-
 from .models import Contact, Contact_Group
 from .forms import ContactForm, ContactGroupForm, UploadFileForm
 from .resources import ContactResource
+from .filters import ContactFilter
 
 from tablib import Dataset
 
@@ -75,9 +75,7 @@ def contact_update(request, pk):
 
 
 @login_required
-def contact_delete(request,
-                   pk,
-                   template_name='contacts/confirm_contact_delete.html'):
+def contact_delete(request, pk, template_name='contacts/confirm_contact_delete.html'):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         contact.delete()
@@ -172,9 +170,9 @@ def export_contact_csv(request):
     response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
     writer = csv.writer(response)
     writer.writerow(
-        ['full_name', 'mobile', 'category'])
+        ['full_name', 'mobile',])
     contacts = Contact.objects.filter(user=request.user).values_list(
-        'full_name', 'mobile', 'category_id')
+        'full_name', 'mobile',)
     for contact in contacts:
         writer.writerow(contact)
     return response
@@ -198,7 +196,14 @@ def contact_upload(request):
 
 @login_required
 def search(request):
-    item = request.GET['q']
-    search = Contact.objects.annotate(search=SearchVector(
-        'first_name', 'last_name', 'mobile', 'email')).filter(search=item)
-    return render(request, 'contacts/contact_search.html', {'object': search})
+    contact_list = Contact.objects.all()
+    contact_filter = ContactFilter(request.GET, queryset=contact_list)
+    return render(request, 'contacts/contacts.html', {'filter': contact_filter})
+
+
+# @login_required
+# def search(request):
+#     item = request.GET['q']
+#     search = Contact.objects.annotate(search=SearchVector(
+#         'full_name', 'mobile',)).filter(search=item)
+#     return render(request, 'contacts/contacts.html', {'object': search})

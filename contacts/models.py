@@ -9,6 +9,7 @@ class Contact_Group(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
+    # contacts = models.OneToManyField('Contact')
 
     class Meta:
         db_table = 'groups'
@@ -34,7 +35,7 @@ class Contact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, null=True, blank=True)
     mobile = models.CharField(max_length=13, help_text='start with 254xxxxxxxx')
-    category = models.ManyToManyField(Contact_Group)
+    category = models.ManyToManyField(Contact_Group, related_name='category')
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

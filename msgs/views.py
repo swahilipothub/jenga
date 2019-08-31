@@ -65,6 +65,9 @@ def sms_create(request):
 @login_required
 def sms_fetch(request, template_name='msgs/fetch_messages.html'):
     last_received_id = 0
+    username = request.user.profile.africastalking_username
+    apikey = request.user.profile.africastalking_api_key
+    gateway = AfricasTalkingGateway(username, apikey)
     while True:
         messages = gateway.fetchMessages(last_received_id)
         for message in messages:
@@ -80,6 +83,9 @@ def sms_fetch(request, template_name='msgs/fetch_messages.html'):
 
 @login_required
 def user_balance(request):
+    username = request.user.profile.africastalking_username
+    apikey = request.user.profile.africastalking_api_key
+    gateway = AfricasTalkingGateway(username, apikey)
     try:
         user = gateway.getUserData()
         balance = user['balance']
