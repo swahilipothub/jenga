@@ -46,7 +46,7 @@ class Contact(models.Model):
         unique_together = ('user', 'mobile')
 
     def __str__(self):
-        return self.full_name
+        return self.mobile
 
     def get_absolute_url(self):
         return reverse('contacts_detail', args=[self.pk])
